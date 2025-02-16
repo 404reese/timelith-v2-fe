@@ -7,10 +7,13 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { ReviewMarquee } from "@/components/custom/ReviewMarquee"; // Make sure the path is correct
+
 
 // top shine
 import { ArrowRight } from "lucide-react";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
+import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
 
 export default function Home() {
   return (
@@ -21,14 +24,20 @@ export default function Home() {
       <div className="h-[70vh] flex items-center justify-center">
         
         <MaxWidthWrapper className="mt-20 flex flex-col items-center justify-center text-center sm:mt-24">
-          <div className="mx-auto mb-10 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-            <p className="text-sm font-semibold text-gray-700">
-            <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-          <span>✨ Try TIMELITH today </span>
-          <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-        </AnimatedShinyText>
-              
-            </p>
+          <div className="mx-auto mb-10 flex max-w-fit items-center justify-center space-x-2 overflow-hidden px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300">
+            
+            <AnimatedGradientText>
+        🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
+        <span
+          className={cn(
+            `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`,
+          )}
+        >
+          Try TIMELITH Today
+        </span>
+        <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+      </AnimatedGradientText>              
+           
           </div>
 
           <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
@@ -36,7 +45,7 @@ export default function Home() {
             Institute Scheduling
           </h1>
 
-          <p className="mt-10 max-w-prose text-lg text-zinc-700 sm:text-2xl">
+          <p className="mt-10 max-w-prose text-lg text-zinc-400 sm:text-2xl">
             The Timelith Scheduler is a specialized tool created to improve the
             scheduling process for institutions
           </p>
@@ -119,10 +128,10 @@ export default function Home() {
           <div>
             <div className="mb-6 px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">
+                <h2 className="mt-2 text-4xl font-bold text-primary sm:text-5xl">
                   Generate Your First Timetable in <span className="text-blue-600">Seconds</span>
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-lg text-primary">
                   Improving your efficiency and saving your time has never been easier than with
                   TIMELITH.
                 </p>
@@ -312,17 +321,22 @@ export default function Home() {
           <div>
             <div className="mb-6 px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">
+                <h2 className="mt-2 text-4xl font-bold text-blue-600 sm:text-5xl">
                   Feedback
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">
-                  What are people saying about Convo
+                <p className="mt-4 text-lg text-primary">
+                  What are people saying about Timelith
                 </p>
+                
               </div>
+              <div className="mt-10">
+              <ReviewMarquee />
+              </div>
+              
             </div>
             {/* steps */}
 
-            <div>
+            {/* <div>
               <div className="mx-auto flex max-w-6xl justify-center px-6 lg:px-8">
                 <div className="flow-root">
                   <div className="-m-2 w-fit rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10  lg:-m-4 lg:rounded-2xl lg:p-4">
@@ -337,7 +351,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </MaxWidthWrapper>

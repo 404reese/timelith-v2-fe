@@ -19,6 +19,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// URL const
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string; 
+
 interface Course {
   id: number;
   courseCode: string;
@@ -50,7 +53,7 @@ export default function CoursesPage() {
 
   // Fetch Courses
   useEffect(() => {
-    fetch("http://localhost:8080/courses")
+    fetch(`${API_BASE_URL}/courses`)
       .then((res) => res.json())
       .then((data) => {
         setCourses(Array.isArray(data) ? data : []);
@@ -60,7 +63,7 @@ export default function CoursesPage() {
 
   // Fetch Departments
   useEffect(() => {
-    fetch("http://localhost:8080/departments")
+    fetch(`${API_BASE_URL}/departments`)
       .then((res) => res.json())
       .then((data) => {
         setDepartments(Array.isArray(data) ? data : []);
@@ -75,7 +78,7 @@ export default function CoursesPage() {
   const handleAdd = () => {
     if (!newCourse.courseCode || !newCourse.courseName || !newCourse.department.id) return;
 
-    fetch("http://localhost:8080/courses", {
+    fetch(`${API_BASE_URL}/courses`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCourse),
@@ -93,7 +96,7 @@ export default function CoursesPage() {
   const handleUpdate = () => {
     if (!editingId) return;
 
-    fetch(`http://localhost:8080/courses/${editingId}`, {
+    fetch(`${API_BASE_URL}/courses/${editingId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newCourse),
@@ -106,7 +109,7 @@ export default function CoursesPage() {
   };
 
   const handleDelete = (id: number) => {
-    fetch(`http://localhost:8080/courses/${id}`, { method: "DELETE" })
+    fetch(`${API_BASE_URL}/courses/${id}`, { method: "DELETE" })
       .then(() => setCourses(courses.filter((course) => course.id !== id)))
       .catch((err) => console.error("Error deleting course:", err));
   };

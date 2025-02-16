@@ -9,15 +9,17 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { ReviewMarquee } from "@/components/custom/ReviewMarquee"; // Make sure the path is correct
 
+import { Linkedin, Mail, Globe } from "lucide-react";
 
 // top shine
 import { ArrowRight } from "lucide-react";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { AnimatedGradientText } from "@/components/magicui/animated-gradient-text";
+import { TS2 } from "@/components/custom/TS2";
 
 export default function Home() {
   return (
-    <>
+    <div className="light-mode">
       <Navbar />
 
       {/* Hero */}
@@ -193,55 +195,55 @@ export default function Home() {
             <div className="mb-6 px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
                 <h2 className="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">
-                  Practice in Real Life Scenarios
+                  Why to <span className="text-blue-600">Choose Us</span> 
                 </h2>
                 <p className="mt-4 text-lg text-gray-600">
-                  Get help if you make a mistake and guidance on saying
-                  something in your target language.
+                  We utilize the latest technologies to provide you with the best
                 </p>
               </div>
             </div>
             {/* steps */}
 
             <div className="flex items-center justify-center">
-              <div className="flex flex-col gap-6 md:flex-row">
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>At the Cafe</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Learn how to order drinks and snacks
+              <div className="flex flex-col gap-12 md:flex-row">
+                <Card className="flex flex-col items-center justify-center gap-4 p-8 md:flex-1">
+                  <CardTitle className="text-center text-3xl">Advanced Scheduling</CardTitle>
+                  <CardDescription className="mb-3 text-center text-lg">
+                  Handles complex scheduling scenarios with ease, ensuring efficiency and accuracy.
                   </CardDescription>
                   <Image
-                    src="/coffee.webp"
+                    src="/1.webp"
                     alt="cafe scenario"
-                    width={128}
-                    height={128}
+                    width={240}
+                    height={240}
                     quality={100}
                   />
                 </Card>
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>Getting A Taxi</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Learn how to navigate and get directions
+                <Card className="flex flex-col items-center justify-center gap-4 p-8 md:flex-1">
+                  <CardTitle className="text-center text-3xl">Rule-Based System</CardTitle>
+                  <CardDescription className="mb-3 text-center text-lg">
+                  Adapts to your unique requirements for planning, making it
+                  easy to manage changes and exceptions.
                   </CardDescription>
                   <Image
-                    src="/taxi.webp"
+                    src="/2.webp"
                     alt="cafe scenario"
-                    width={128}
-                    height={128}
+                    width={240}
+                    height={240}
                     quality={100}
                   />
                 </Card>
 
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>Social Activities</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Learn how to make plans and catch up with friends
+                <Card className="flex flex-col items-center justify-center gap-4 p-8 md:flex-1">
+                  <CardTitle className="text-center text-3xl">Meet Minimum Criterion</CardTitle>
+                  <CardDescription className="mb-3 text-center text-lg">
+                  Alerts you to potential conflicts and suggests alternatives for a smooth planning experience.
                   </CardDescription>
                   <Image
-                    src="/schedule.webp"
+                    src="/3.webp"
                     alt="cafe scenario"
-                    width={128}
-                    height={128}
+                    width={240}
+                    height={240}
                     quality={100}
                   />
                 </Card>
@@ -254,78 +256,21 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Powered By */}
+          {/* team section */}
           <div>
-            <div className="mb-6 px-6 lg:px-8">
-              <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">
-                  Powered by
-                </h2>
-                <p className="mt-4 text-lg text-gray-600">
-                  These are the technologies behind the scene that make Convo
-                  possible
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <div className="flex flex-col gap-6 md:flex-row">
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>Whisper AI</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Speech to text
-                  </CardDescription>
-                  <Image
-                    src="/mic.webp"
-                    alt="cafe scenario"
-                    width={128}
-                    height={128}
-                    quality={100}
-                    className="rounded-xl"
-                  />
-                </Card>
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>GPT 4</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Comprehensive prompts and responses
-                  </CardDescription>
-                  <Image
-                    src="/openai.webp"
-                    alt="cafe scenario"
-                    width={128}
-                    height={128}
-                    quality={100}
-                    className="rounded-xl"
-                  />
-                </Card>
-
-                <Card className="flex flex-col items-center justify-center gap-2 p-6 md:flex-1">
-                  <CardTitle>WebSpeech</CardTitle>
-                  <CardDescription className="mb-3 text-center">
-                    Text to speech
-                  </CardDescription>
-                  <Image
-                    src="/speaker.webp"
-                    alt="cafe scenario"
-                    width={128}
-                    height={128}
-                    quality={100}
-                    className="rounded-xl"
-                  />
-                </Card>
-              </div>
-            </div>
-          </div>
+      
+      <TS2 />
+    </div>
 
           {/* Feedback */}
           <div>
             <div className="mb-6 px-6 lg:px-8">
               <div className="mx-auto max-w-2xl sm:text-center">
-                <h2 className="mt-2 text-4xl font-bold text-blue-600 sm:text-5xl">
-                  Feedback
+                <h2 className="mt-2 text-4xl font-bold text-primary sm:text-5xl">
+                  <span className="text-blue-600">Feedback</span> We Received
                 </h2>
                 <p className="mt-4 text-lg text-primary">
-                  What are people saying about Timelith
+                  What are people saying about us
                 </p>
                 
               </div>
@@ -357,6 +302,6 @@ export default function Home() {
       </MaxWidthWrapper>
 
       <Footer />
-    </>
+    </div>
   );
 }

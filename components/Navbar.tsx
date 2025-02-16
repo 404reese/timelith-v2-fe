@@ -63,7 +63,7 @@ const Navbar = () => {
                       variant: "ghost",
                       size: "sm",
                     })}
-                    href="/sign-in"
+                    href="/about"
                   >
                     About
                   </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
                     className={buttonVariants({
                       size: "sm",
                     })}
-                    href="/sign-up"
+                    href="/dashboard"
                   >
                     Get started
                   </Link>

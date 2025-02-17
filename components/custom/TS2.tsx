@@ -22,13 +22,13 @@ const foundersData = [
     email: "rid@company.com",
   },
   {
-    name: "Mujtaba Mohammed",
+    name: "Arpit Balmiki",
     title: "Backend & Cloud",
     image: "/mj.jpg",
     socials: {
-      linkedin: "https://linkedin.com/in/riddheshchaudhary",
-      github: "https://github.com/404reese",
-      website: "https://riddhesh.vercel.app",
+      linkedin: "https://www.linkedin.com/in/arpit-balmiki-b247b0290/",
+      github: "https://github.com/ace19wre",
+      website: "mailto:arpitbalmiki@gmail.com",
     },
     email: "mj@company.com",
   },

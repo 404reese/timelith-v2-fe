@@ -26,9 +26,16 @@ export default function Home() {
       <div className="h-[70vh] flex items-center justify-center">
         
         <MaxWidthWrapper className="mt-20 flex flex-col items-center justify-center text-center sm:mt-24">
-          <div className="mx-auto mb-10 flex max-w-fit items-center justify-center space-x-2 overflow-hidden px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300">
+          <div className="mx-auto mb-10 flex max-w-fit items-center justify-center space-x-2 overflow-hidden px-7 py-2 transition-all">
             
-            <AnimatedGradientText>
+            <AnimatedGradientText
+              style={
+                {
+                  '--text-spacing': '0px',
+                } as React.CSSProperties
+              }
+              className="hover:scale-110 transition-all duration-300 ease-in-out"
+            >
         🎉 <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
         <span
           className={cn(
@@ -37,7 +44,7 @@ export default function Home() {
         >
           Try TIMELITH Today
         </span>
-        <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+        <ArrowRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
       </AnimatedGradientText>              
            
           </div>

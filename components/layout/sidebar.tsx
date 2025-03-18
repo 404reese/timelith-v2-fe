@@ -14,7 +14,8 @@ import {
   Clock,
   Calendar,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  SquareMenu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +42,11 @@ const routes = [
     label: "Departments",
     icon: Building2,
     href: "/departments",
+  },
+  {
+    label: "Period Types",
+    icon: SquareMenu,
+    href: "/periodtypes",
   },
   {
     label: "Courses",

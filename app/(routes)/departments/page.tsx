@@ -19,7 +19,7 @@ interface Department {
   acronym: string;
 }
 
-const API_URL = "http://localhost:8080/departments"; // Replace with your actual backend URL
+const API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/departments`;
 
 export default function DepartmentsPage() {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -104,6 +104,7 @@ export default function DepartmentsPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Department Records</h1>
       </div>
+      <p className="text-muted-foreground">Departments should be created here and then to be used in different sections</p>
       <div className="space-y-4 p-4 rounded-lg border bg-card">
         <div className="flex gap-4 items-center">
           <Input

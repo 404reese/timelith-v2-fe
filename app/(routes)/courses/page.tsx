@@ -33,13 +33,18 @@ interface Course {
     name: string;
     acronym: string;
   };
-  type: string;
-  periodDuration: number;
+  type: {
+    id: number;
+    type: string;
+    duration: string;
+    numberOfLecturesPerWeek: number;
+  };
 }
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [departments, setDepartments] = useState<{ id: number; name: string }[]>([]);
+  const [periodTypes, setPeriodTypes] = useState<{ id: number; type: string; duration: string; numberOfLecturesPerWeek: number }[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [newCourse, setNewCourse] = useState<Omit<Course, "id">>({
     courseCode: "",
@@ -47,8 +52,7 @@ export default function CoursesPage() {
     semester: "",
     lecturesPerWeek: 0,
     department: { id: 0, name: "", acronym: "" },
-    type: "",
-    periodDuration: 1,
+    type: { id: 0, type: "", duration: "", numberOfLecturesPerWeek: 0 },
   });
 
   // Fetch Courses
@@ -73,7 +77,19 @@ export default function CoursesPage() {
         setDepartments([]); // Ensure it's always an array
       });
   }, []);
-  
+
+  // Fetch Period Types
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/periodicities`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPeriodTypes(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("Error fetching period types:", err);
+        setPeriodTypes([]);
+      });
+  }, []);
 
   const handleAdd = () => {
     if (!newCourse.courseCode || !newCourse.courseName || !newCourse.department.id) return;
@@ -149,23 +165,22 @@ export default function CoursesPage() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={newCourse.type} onValueChange={(value) => setNewCourse({ ...newCourse, type: value })}>
+          <Select 
+            value={String(newCourse.type.id)} 
+            onValueChange={(value) => {
+              const selectedType = periodTypes.find(pt => pt.id === Number(value));
+              if (selectedType) {
+                setNewCourse({ ...newCourse, type: selectedType });
+              }
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Course Type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Lecture">Lecture</SelectItem>
-              <SelectItem value="Lab">Lab</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={String(newCourse.periodDuration)} onValueChange={(value) => setNewCourse({ ...newCourse, periodDuration: Number(value) })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Period Duration" />
-            </SelectTrigger>
-            <SelectContent>
-              {[1, 2, 3].map((hours) => (
-                <SelectItem key={hours} value={String(hours)}>
-                  {hours} Hour{hours > 1 ? "s" : ""}
+              {periodTypes.map((pt) => (
+                <SelectItem key={pt.id} value={String(pt.id)}>
+                  {pt.type}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -187,7 +202,6 @@ export default function CoursesPage() {
               <TableHead>Semester</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Type</TableHead>
-              <TableHead>Duration</TableHead>
               <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -198,8 +212,7 @@ export default function CoursesPage() {
                 <TableCell>{course.courseName}</TableCell>
                 <TableCell>{course.semester}</TableCell>
                 <TableCell>{course.department.name}</TableCell>
-                <TableCell>{course.type}</TableCell>
-                <TableCell>{course.periodDuration} hrs</TableCell>
+                <TableCell>{course.type.type}</TableCell>
                 <TableCell>
                 <div className="flex justify-center gap-2">
                   <Button variant="outline" onClick={() => handleEdit(course)} className="transition-colors hover:text-blue-600 hover:border-blue-600"><Pencil className="h-4 w-4" /></Button>

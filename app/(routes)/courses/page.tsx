@@ -19,20 +19,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// URL const
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
 interface Course {
   id: number;
   courseCode: string;
   courseName: string;
   semester: string;
-  lecturesPerWeek: number;
-  department: {
-    id: number;
-    name: string;
-    acronym: string;
-  };
+  departmentId: number; 
   type: {
     id: number;
     type: string;
@@ -50,8 +44,7 @@ export default function CoursesPage() {
     courseCode: "",
     courseName: "",
     semester: "",
-    lecturesPerWeek: 0,
-    department: { id: 0, name: "", acronym: "" },
+    departmentId: 0, 
     type: { id: 0, type: "", duration: "", numberOfLecturesPerWeek: 0 },
   });
 
@@ -74,7 +67,7 @@ export default function CoursesPage() {
       })
       .catch((err) => {
         console.error("Error fetching departments:", err);
-        setDepartments([]); // Ensure it's always an array
+        setDepartments([]);
       });
   }, []);
 
@@ -92,12 +85,17 @@ export default function CoursesPage() {
   }, []);
 
   const handleAdd = () => {
-    if (!newCourse.courseCode || !newCourse.courseName || !newCourse.department.id) return;
+    if (!newCourse.courseCode || !newCourse.courseName || !newCourse.departmentId) return;
 
-    fetch(`${API_BASE_URL}/courses`, {
+    fetch(`${API_BASE_URL}/courses/${newCourse.departmentId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newCourse),
+      body: JSON.stringify({
+        courseCode: newCourse.courseCode,
+        courseName: newCourse.courseName,
+        semester: newCourse.semester,
+        type: newCourse.type.type,
+      }),
     })
       .then((res) => res.json())
       .then((data) => setCourses([...courses, data]))
@@ -112,13 +110,20 @@ export default function CoursesPage() {
   const handleUpdate = () => {
     if (!editingId) return;
 
-    fetch(`${API_BASE_URL}/courses/${editingId}`, {
+    fetch(`${API_BASE_URL}/courses/${editingId}?departmentId=${newCourse.departmentId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newCourse),
+      body: JSON.stringify({
+        courseCode: newCourse.courseCode,
+        courseName: newCourse.courseName,
+        semester: newCourse.semester,
+        type: newCourse.type.type,
+      }),
     })
       .then(() => {
-        setCourses(courses.map((c) => (c.id === editingId ? { ...newCourse, id: editingId } : c)));
+        setCourses(courses.map((c) =>
+          c.id === editingId ? { ...newCourse, id: editingId } : c
+        ));
         setEditingId(null);
       })
       .catch((err) => console.error("Error updating course:", err));
@@ -136,9 +141,20 @@ export default function CoursesPage() {
 
       <div className="space-y-4 p-4 rounded-lg border bg-card">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Input placeholder="Course Code" value={newCourse.courseCode} onChange={(e) => setNewCourse({ ...newCourse, courseCode: e.target.value })} />
-          <Input placeholder="Course Name" value={newCourse.courseName} onChange={(e) => setNewCourse({ ...newCourse, courseName: e.target.value })} />
-          <Select value={newCourse.semester} onValueChange={(value) => setNewCourse({ ...newCourse, semester: value })}>
+          <Input
+            placeholder="Course Code"
+            value={newCourse.courseCode}
+            onChange={(e) => setNewCourse({ ...newCourse, courseCode: e.target.value })}
+          />
+          <Input
+            placeholder="Course Name"
+            value={newCourse.courseName}
+            onChange={(e) => setNewCourse({ ...newCourse, courseName: e.target.value })}
+          />
+          <Select
+            value={newCourse.semester}
+            onValueChange={(value) => setNewCourse({ ...newCourse, semester: value })}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Semester" />
             </SelectTrigger>
@@ -153,22 +169,25 @@ export default function CoursesPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select value={String(newCourse.department.id)} onValueChange={(value) => setNewCourse({ ...newCourse, department: { ...newCourse.department, id: Number(value) } })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Department" />
-            </SelectTrigger>
-            <SelectContent>
-              {departments.map((dept) => (
-                <SelectItem key={dept.id} value={String(dept.id)}>
-                  {dept.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select 
-            value={String(newCourse.type.id)} 
+        <Select
+    value={String(newCourse.departmentId)}
+    onValueChange={(value) => setNewCourse({ ...newCourse, departmentId: Number(value) })}
+  >
+    <SelectTrigger>
+      <SelectValue placeholder="Department" />
+    </SelectTrigger>
+    <SelectContent>
+      {departments.map((dept) => (
+        <SelectItem key={dept.id} value={String(dept.id)}>
+          {dept.name}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+          <Select
+            value={String(newCourse.type.id)}
             onValueChange={(value) => {
-              const selectedType = periodTypes.find(pt => pt.id === Number(value));
+              const selectedType = periodTypes.find((pt) => pt.id === Number(value));
               if (selectedType) {
                 setNewCourse({ ...newCourse, type: selectedType });
               }
@@ -211,14 +230,24 @@ export default function CoursesPage() {
                 <TableCell>{course.courseCode}</TableCell>
                 <TableCell>{course.courseName}</TableCell>
                 <TableCell>{course.semester}</TableCell>
-                <TableCell>{course.department.name}</TableCell>
-                <TableCell>{course.type.type}</TableCell>
+                <TableCell>{course.departmentId}</TableCell>
+                <TableCell>{course.type}</TableCell>
                 <TableCell>
-                <div className="flex justify-center gap-2">
-                  <Button variant="outline" onClick={() => handleEdit(course)} className="transition-colors hover:text-blue-600 hover:border-blue-600"><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="outline" onClick={() => handleDelete(course.id)} className="transition-colors hover:text-red-600 hover:border-red-600" >
-                  <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <div className="flex justify-center gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => handleEdit(course)}
+                      className="transition-colors hover:text-blue-600 hover:border-blue-600"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => handleDelete(course.id)}
+                      className="transition-colors hover:text-red-600 hover:border-red-600"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>

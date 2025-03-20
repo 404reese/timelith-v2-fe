@@ -26,13 +26,12 @@ interface Course {
   courseCode: string;
   courseName: string;
   semester: string;
-  departmentId: number; 
-  type: {
+  department: {
     id: number;
-    type: string;
-    duration: string;
-    numberOfLecturesPerWeek: number;
+    name: string;
+    acronym: string;
   };
+  type: string;
 }
 
 export default function CoursesPage() {
@@ -44,8 +43,8 @@ export default function CoursesPage() {
     courseCode: "",
     courseName: "",
     semester: "",
-    departmentId: 0, 
-    type: { id: 0, type: "", duration: "", numberOfLecturesPerWeek: 0 },
+    department: { id: 0, name: "", acronym: "" },
+    type: "",
   });
 
   // Fetch Courses
@@ -85,16 +84,16 @@ export default function CoursesPage() {
   }, []);
 
   const handleAdd = () => {
-    if (!newCourse.courseCode || !newCourse.courseName || !newCourse.departmentId) return;
+    if (!newCourse.courseCode || !newCourse.courseName || !newCourse.department.id) return;
 
-    fetch(`${API_BASE_URL}/courses/${newCourse.departmentId}`, {
+    fetch(`${API_BASE_URL}/courses/${newCourse.department.id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         courseCode: newCourse.courseCode,
         courseName: newCourse.courseName,
         semester: newCourse.semester,
-        type: newCourse.type.type,
+        type: newCourse.type,
       }),
     })
       .then((res) => res.json())
@@ -110,14 +109,14 @@ export default function CoursesPage() {
   const handleUpdate = () => {
     if (!editingId) return;
 
-    fetch(`${API_BASE_URL}/courses/${editingId}?departmentId=${newCourse.departmentId}`, {
+    fetch(`${API_BASE_URL}/courses/${editingId}?departmentId=${newCourse.department.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         courseCode: newCourse.courseCode,
         courseName: newCourse.courseName,
         semester: newCourse.semester,
-        type: newCourse.type.type,
+        type: newCourse.type,
       }),
     })
       .then(() => {
@@ -170,11 +169,14 @@ export default function CoursesPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Select
-    value={String(newCourse.departmentId)}
-    onValueChange={(value) => setNewCourse({ ...newCourse, departmentId: Number(value) })}
+    value={String(newCourse.department.id)}
+    onValueChange={(value) => setNewCourse({
+      ...newCourse,
+      department: departments.find(d => d.id === Number(value)) || { id: Number(value), name: "", acronym: "N/A" }
+    })}
   >
-    <SelectTrigger>
-      <SelectValue placeholder="Department" />
+    <SelectTrigger className="w-full">
+      <SelectValue placeholder="Select Department" />
     </SelectTrigger>
     <SelectContent>
       {departments.map((dept) => (
@@ -185,11 +187,11 @@ export default function CoursesPage() {
     </SelectContent>
   </Select>
           <Select
-            value={String(newCourse.type.id)}
+            value={String(newCourse.type)}
             onValueChange={(value) => {
               const selectedType = periodTypes.find((pt) => pt.id === Number(value));
               if (selectedType) {
-                setNewCourse({ ...newCourse, type: selectedType });
+                setNewCourse({ ...newCourse, type: selectedType.type });
               }
             }}
           >
@@ -230,7 +232,7 @@ export default function CoursesPage() {
                 <TableCell>{course.courseCode}</TableCell>
                 <TableCell>{course.courseName}</TableCell>
                 <TableCell>{course.semester}</TableCell>
-                <TableCell>{course.departmentId}</TableCell>
+                <TableCell>{course.department.name}</TableCell>
                 <TableCell>{course.type}</TableCell>
                 <TableCell>
                   <div className="flex justify-center gap-2">

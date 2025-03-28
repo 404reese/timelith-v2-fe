@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { UploadCSVButton } from "./UploadCSVButton";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
@@ -25,6 +26,7 @@ interface Course {
   id: number;
   courseCode: string;
   courseName: string;
+  courseInit: string;
   semester: string;
   department: {
     id: number;
@@ -42,6 +44,7 @@ export default function CoursesPage() {
   const [newCourse, setNewCourse] = useState<Omit<Course, "id">>({
     courseCode: "",
     courseName: "",
+    courseInit: "",
     semester: "",
     department: { id: 0, name: "", acronym: "" },
     type: "",
@@ -92,6 +95,7 @@ export default function CoursesPage() {
       body: JSON.stringify({
         courseCode: newCourse.courseCode,
         courseName: newCourse.courseName,
+        courseInit: newCourse.courseInit,
         semester: newCourse.semester,
         type: newCourse.type,
       }),
@@ -115,6 +119,7 @@ export default function CoursesPage() {
       body: JSON.stringify({
         courseCode: newCourse.courseCode,
         courseName: newCourse.courseName,
+        courseInit: newCourse.courseInit,
         semester: newCourse.semester,
         type: newCourse.type,
       }),
@@ -137,7 +142,16 @@ export default function CoursesPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Course Records</h1>
-
+      <UploadCSVButton 
+        departments={departments}
+        periodTypes={periodTypes}
+        onSuccess={() => {
+          // Refresh course list after upload
+          fetch(`${API_BASE_URL}/courses`)
+            .then((res) => res.json())
+            .then((data) => setCourses(Array.isArray(data) ? data : []));
+        }}
+      />
       <div className="space-y-4 p-4 rounded-lg border bg-card">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Input
@@ -150,11 +164,19 @@ export default function CoursesPage() {
             value={newCourse.courseName}
             onChange={(e) => setNewCourse({ ...newCourse, courseName: e.target.value })}
           />
+          <Input
+            placeholder="Course Initials"
+            value={newCourse.courseInit}
+            onChange={(e) => setNewCourse({ ...newCourse, courseInit: e.target.value })}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Select
             value={newCourse.semester}
             onValueChange={(value) => setNewCourse({ ...newCourse, semester: value })}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Semester" />
             </SelectTrigger>
             <SelectContent>
@@ -165,27 +187,24 @@ export default function CoursesPage() {
               ))}
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Select
-    value={String(newCourse.department.id)}
-    onValueChange={(value) => setNewCourse({
-      ...newCourse,
-      department: departments.find(d => d.id === Number(value)) || { id: Number(value), name: "", acronym: "N/A" }
-    })}
-  >
-    <SelectTrigger className="w-full">
-      <SelectValue placeholder="Select Department" />
-    </SelectTrigger>
-    <SelectContent>
-      {departments.map((dept) => (
-        <SelectItem key={dept.id} value={String(dept.id)}>
-          {dept.name}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
+          <Select
+            value={String(newCourse.department.id)}
+            onValueChange={(value) => setNewCourse({
+              ...newCourse,
+              department: departments.find(d => d.id === Number(value)) || { id: Number(value), name: "", acronym: "N/A" }
+            })}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Department" />
+            </SelectTrigger>
+            <SelectContent>
+              {departments.map((dept) => (
+                <SelectItem key={dept.id} value={String(dept.id)}>
+                  {dept.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Select
             value={String(newCourse.type)}
             onValueChange={(value) => {
@@ -220,6 +239,7 @@ export default function CoursesPage() {
             <TableRow>
               <TableHead>Code</TableHead>
               <TableHead>Name</TableHead>
+              <TableHead>Initials</TableHead>
               <TableHead>Semester</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Type</TableHead>
@@ -231,6 +251,7 @@ export default function CoursesPage() {
               <TableRow key={course.id}>
                 <TableCell>{course.courseCode}</TableCell>
                 <TableCell>{course.courseName}</TableCell>
+                <TableCell>{course.courseInit}</TableCell>
                 <TableCell>{course.semester}</TableCell>
                 <TableCell>{course.department.name}</TableCell>
                 <TableCell>{course.type}</TableCell>

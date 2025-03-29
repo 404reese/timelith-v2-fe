@@ -1,11 +1,11 @@
 "use client";
 
-import {  Menu } from "lucide-react";
+import {  Menu, CircleHelp } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useSidebarStore } from "@/store/sidebar";
-import Image from "next/image";
+
 
 export default function Navbar() {
   const { toggleSidebar } = useSidebarStore();
@@ -29,8 +29,9 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="flex items-center space-x-4">
-          <Link href="/about" className="text-muted-foreground hover:text-primary">
-            About
+          <Link href="/help" className="flex items-center space-x-1 text-muted-foreground hover:text-primary">
+            <span>Help</span>
+            <CircleHelp className="h-4 w-4" />
           </Link>
           <ModeToggle />
           <Button>Login</Button>

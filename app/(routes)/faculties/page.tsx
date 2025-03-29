@@ -27,6 +27,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import DepartmentSelect from "@/components/custom/DepartmentSelect";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL as string;
 
@@ -321,27 +322,15 @@ export default function InstructorsPage() {
             }
           />
 
-          <Select
+          <DepartmentSelect
             value={String(newInstructor.departmentPreference?.id || "")}
-            onValueChange={(value) => {
-              const selectedDept = departments.find(d => d.id === Number(value));
+            onValueChange={(value, department) => 
               setNewInstructor({
                 ...newInstructor,
-                departmentPreference: selectedDept || { id: Number(value), name: "", acronym: "" }
-              });
-            }}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Department" />
-            </SelectTrigger>
-            <SelectContent>
-              {departments.map((dept) => (
-                <SelectItem key={dept.id} value={String(dept.id)}>
-                  {dept.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+                departmentPreference: department
+              })
+            }
+          />
         </div>
 
         <Button 

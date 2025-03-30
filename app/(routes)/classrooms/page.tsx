@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import MultipleSelector, { Option } from '@/components/ui/MultiSelector';
 
 const DEPARTMENTS = ["Computer Science", "Electrical Engineering", "Mechanical Engineering", "Civil Engineering"];
-const CLASSROOM_TYPES = ["Lab", "Classroom"];
+const CLASSROOM_TYPES = ["Computer Lab", "Lecture Hall"];
 const COURSES = [
   { label: "Maths", value: "Maths" },
   { label: "DSA", value: "DSA" },
@@ -27,30 +27,32 @@ const COURSES = [
 
 interface Classroom {
   id: string;
-  roomId: string;
+  roomName: string;
   capacity: number;
-  compatibleCourses: Option[];
-  department: string;
-  type: string;
+  roomType: string;
+  // compatibleCourses will be added later
 }
 
 export default function ClassroomPage() {
   const [classrooms, setClassrooms] = useState<Classroom[]>([]);
   const [newClassroom, setNewClassroom] = useState<Classroom>({
     id: "",
-    roomId: "",
+    roomName: "",
     capacity: 0,
-    compatibleCourses: [],
-    department: "",
-    type: "",
+    roomType: "",
   });
 
   const resetForm = () => {
-    setNewClassroom({ id: "", roomId: "", capacity: 0, compatibleCourses: [], department: "", type: "" });
+    setNewClassroom({ 
+      id: "", 
+      roomName: "", 
+      capacity: 0, 
+      roomType: "" 
+    });
   };
 
   const handleAdd = () => {
-    if (!newClassroom.roomId || !newClassroom.capacity || !newClassroom.department || !newClassroom.type) return;
+    if (!newClassroom.roomName || !newClassroom.capacity || !newClassroom.roomType) return;
     setClassrooms([...classrooms, { ...newClassroom, id: crypto.randomUUID() }]);
     resetForm();
   };
@@ -69,31 +71,19 @@ export default function ClassroomPage() {
       <div className="space-y-4 p-4 rounded-lg border bg-card">
         <div className="flex gap-4 justify-between">
           <Input
-            placeholder="Room ID"
-            value={newClassroom.roomId}
-            onChange={(e) => setNewClassroom({ ...newClassroom, roomId: e.target.value })}
-            
+            placeholder="Room Name"
+            value={newClassroom.roomName}
+            onChange={(e) => setNewClassroom({ ...newClassroom, roomName: e.target.value })}
           />
           <Input
             type="number"
             placeholder="Room Capacity"
             value={newClassroom.capacity || ""}
             onChange={(e) => setNewClassroom({ ...newClassroom, capacity: Number(e.target.value) })}
-            
           />
-          <Select value={newClassroom.department} onValueChange={(value) => setNewClassroom({ ...newClassroom, department: value })}>
-            <SelectTrigger >
-              <SelectValue placeholder="Home Department" />
-            </SelectTrigger>
-            <SelectContent>
-              {DEPARTMENTS.map((dept) => (
-                <SelectItem key={dept} value={dept}>{dept}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select value={newClassroom.type} onValueChange={(value) => setNewClassroom({ ...newClassroom, type: value })}>
+          <Select value={newClassroom.roomType} onValueChange={(value) => setNewClassroom({ ...newClassroom, roomType: value })}>
             <SelectTrigger>
-              <SelectValue placeholder="Type" />
+              <SelectValue placeholder="Room Type" />
             </SelectTrigger>
             <SelectContent>
               {CLASSROOM_TYPES.map((type) => (
@@ -101,14 +91,8 @@ export default function ClassroomPage() {
               ))}
             </SelectContent>
           </Select>
-          
         </div>
         <div className="flex gap-4 items-center mt-4 justify-center">
-        <MultipleSelector
-            defaultOptions={COURSES}
-            placeholder="Compatible Courses"
-            onChange={(selected) => setNewClassroom({ ...newClassroom, compatibleCourses: selected })}
-          />
           <Button
             onClick={handleAdd}
             className="transition-transform hover:scale-105 hover:bg-primary/90"
@@ -123,28 +107,18 @@ export default function ClassroomPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Room ID</TableHead>
+              <TableHead>Room Name</TableHead>
               <TableHead>Capacity</TableHead>
-              <TableHead>Compatible Courses</TableHead>
-              <TableHead>Home Department</TableHead>
-              <TableHead>Type</TableHead>
+              <TableHead>Room Type</TableHead>
               <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {classrooms.map((classroom) => (
               <TableRow key={classroom.id}>
-                <TableCell>{classroom.roomId}</TableCell>
+                <TableCell>{classroom.roomName}</TableCell>
                 <TableCell>{classroom.capacity}</TableCell>
-                <TableCell>
-                  <div className="flex flex-wrap gap-1">
-                    {classroom.compatibleCourses.map((course) => (
-                      <Badge key={course.value} variant="secondary">{course.label}</Badge>
-                    ))}
-                  </div>
-                </TableCell>
-                <TableCell>{classroom.department}</TableCell>
-                <TableCell>{classroom.type}</TableCell>
+                <TableCell>{classroom.roomType}</TableCell>
                 <TableCell>
                   <div className="flex justify-center gap-2">
                     <Button

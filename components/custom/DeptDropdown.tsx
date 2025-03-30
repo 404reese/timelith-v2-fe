@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import DepartmentSelect from "./DepartmentSelect";
 
 interface Course {
   id: number;
@@ -71,7 +72,6 @@ export default function CoursesPage() {
         setDepartments([]); // Ensure it's always an array
       });
   }, []);
-  
 
   const handleAdd = () => {
     if (!newCourse.courseCode || !newCourse.courseName || !newCourse.department.id) return;
@@ -135,18 +135,19 @@ export default function CoursesPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select value={String(newCourse.department.id)} onValueChange={(value) => setNewCourse({ ...newCourse, department: { ...newCourse.department, id: Number(value) } })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Department" />
-            </SelectTrigger>
-            <SelectContent>
-              {departments.map((dept) => (
-                <SelectItem key={dept.id} value={String(dept.id)}>
-                  {dept.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <DepartmentSelect
+            value={String(newCourse.department.id)}
+            onValueChange={(value, department) => 
+              setNewCourse({ 
+                ...newCourse, 
+                department: { 
+                  id: Number(value), 
+                  name: department.name, 
+                  acronym: department.acronym 
+                } 
+              })
+            }
+          />
           <Select value={newCourse.type} onValueChange={(value) => setNewCourse({ ...newCourse, type: value })}>
             <SelectTrigger>
               <SelectValue placeholder="Course Type" />

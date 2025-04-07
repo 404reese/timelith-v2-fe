@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Pencil, Trash2, Users } from "lucide-react";
+import { Plus, Pencil, Trash2, Users, GitBranch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import DepartmentSelect from "@/components/custom/DepartmentSelect";
 import {
   Select,
   SelectContent,
@@ -28,6 +29,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
 interface Division {
   id: number;
@@ -50,19 +52,19 @@ interface Student {
   rollNumber: string;
 }
 
-const DEPARTMENTS = [
-  { id: 1, name: "AI-DS", acronym: "Artificial Intelligence & Data Science" },
-  { id: 2, name: "Electrical Engineering", acronym: "EE" },
-  { id: 3, name: "Mechanical Engineering", acronym: "ME" },
-  { id: 4, name: "Civil Engineering", acronym: "CE" },
-  { id: 5, name: "Chemical Engineering", acronym: "ChE" },
-];
+interface SubBatch {
+  id?: number;
+  subBatchName: string;
+  divisionId: number;
+  studentIds: number[];
+}
 
 const SEMESTERS = [
   "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
 ];
 
 export default function DivisionsPage() {
+  const router = useRouter();
   const [divisions, setDivisions] = useState<Division[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -72,13 +74,23 @@ export default function DivisionsPage() {
     identity: "A",
     semester: "I",
     academicYear: "",
-    department: DEPARTMENTS[0],
+    department: { id: 1, name: "AI-DS", acronym: "Artificial Intelligence & Data Science" },
     studentIds: [],
   });
   const [loading, setLoading] = useState(true);
   const [studentDialogOpen, setStudentDialogOpen] = useState(false);
   const [selectedDivision, setSelectedDivision] = useState<Division | null>(null);
   const [selectedStudents, setSelectedStudents] = useState<number[]>([]);
+  const [divisionStudentCounts, setDivisionStudentCounts] = useState<Record<number, number>>({});
+  const [subBatchDialogOpen, setSubBatchDialogOpen] = useState(false);
+  const [selectedDivisionForSubBatch, setSelectedDivisionForSubBatch] = useState<Division | null>(null);
+  const [newSubBatch, setNewSubBatch] = useState<SubBatch>({
+    subBatchName: '',  // Changed from 'name' to 'subBatchName'
+    divisionId: 0,
+    studentIds: []
+  });
+  const [divisionSubBatches, setDivisionSubBatches] = useState<Record<number, SubBatch[]>>({});
+  const [editingSubBatchId, setEditingSubBatchId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchDivisions();
@@ -90,6 +102,14 @@ export default function DivisionsPage() {
       const response = await fetch("http://localhost:8080/divisions");
       const data = await response.json();
       setDivisions(data);
+      
+      // Fetch both student counts and sub-batches for each division
+      const counts: Record<number, number> = {};
+      for (const division of data) {
+        counts[division.id] = await fetchStudentCount(division.id);
+        await fetchDivisionSubBatches(division.id); // Fetch sub-batches here
+      }
+      setDivisionStudentCounts(counts);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching divisions:", error);
@@ -118,6 +138,32 @@ export default function DivisionsPage() {
     }
   };
 
+  const fetchStudentCount = async (divisionId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/divisions/${divisionId}/students`);
+      const students = await response.json();
+      return students.length;
+    } catch (error) {
+      console.error(`Error fetching student count for division ${divisionId}:`, error);
+      return 0;
+    }
+  };
+
+  const fetchDivisionSubBatches = async (divisionId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/divisions/${divisionId}/subbatches`);
+      const data = await response.json();
+      setDivisionSubBatches(prev => ({
+        ...prev,
+        [divisionId]: data
+      }));
+      return data;
+    } catch (error) {
+      console.error("Error fetching sub-batches:", error);
+      return [];
+    }
+  };
+
   const resetForm = () => {
     setNewDivision({
       year: 1,
@@ -125,7 +171,7 @@ export default function DivisionsPage() {
       identity: "A",
       semester: "I",
       academicYear: "",
-      department: DEPARTMENTS[0],
+      department: { id: 1, name: "AI-DS", acronym: "Artificial Intelligence & Data Science" },
       studentIds: [],
     });
   };
@@ -261,6 +307,82 @@ export default function DivisionsPage() {
     }
   };
 
+  const handleCreateSubBatch = async () => {
+    if (!selectedDivisionForSubBatch || !newSubBatch.subBatchName) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/divisions/${selectedDivisionForSubBatch.id}/subbatches`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subBatchName: newSubBatch.subBatchName  // Only send subBatchName
+        }),
+      });
+
+      if (response.ok) {
+        await fetchDivisionSubBatches(selectedDivisionForSubBatch.id);
+        setNewSubBatch({
+          subBatchName: '',  // Reset with correct property name
+          divisionId: selectedDivisionForSubBatch.id,
+          studentIds: []
+        });
+      }
+    } catch (error) {
+      console.error("Error creating sub-batch:", error);
+    }
+  };
+
+  const handleEditSubBatch = (batch: SubBatch) => {
+    setEditingSubBatchId(batch.id!);
+    setNewSubBatch({
+      ...batch
+    });
+  };
+
+  const handleUpdateSubBatch = async () => {
+    if (!editingSubBatchId || !newSubBatch.subBatchName) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/subbatches/${editingSubBatchId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subBatchName: newSubBatch.subBatchName
+        }),
+      });
+
+      if (response.ok) {
+        await fetchDivisionSubBatches(newSubBatch.divisionId);
+        setEditingSubBatchId(null);
+        setNewSubBatch({
+          subBatchName: '',
+          divisionId: newSubBatch.divisionId,
+          studentIds: []
+        });
+      }
+    } catch (error) {
+      console.error("Error updating sub-batch:", error);
+    }
+  };
+
+  const handleDeleteSubBatch = async (subBatchId: number, divisionId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/subbatches/${subBatchId}`, {
+        method: "DELETE",
+      });
+      
+      if (response.ok) {
+        await fetchDivisionSubBatches(divisionId);
+      }
+    } catch (error) {
+      console.error("Error deleting sub-batch:", error);
+    }
+  };
+
   const getStudentName = (studentId: number) => {
     const student = students.find(s => s.id === studentId);
     return student ? `${student.rollNumber} - ${student.name}` : `Student ID: ${studentId}`;
@@ -337,26 +459,15 @@ export default function DivisionsPage() {
                 className="w-full"
               />
               
-              <Select
+              <DepartmentSelect
                 value={newDivision.department.id.toString()}
-                onValueChange={(value) =>
+                onValueChange={(value, department) =>
                   setNewDivision({
                     ...newDivision,
-                    department: DEPARTMENTS.find(d => d.id === parseInt(value)) || DEPARTMENTS[0]
+                    department: department
                   })
                 }
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Department" />
-                </SelectTrigger>
-                <SelectContent>
-                  {DEPARTMENTS.map((dept) => (
-                    <SelectItem key={dept.id} value={dept.id.toString()}>
-                      {dept.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              />
             </div>
 
             <div className="flex items-center gap-2">
@@ -388,89 +499,110 @@ export default function DivisionsPage() {
         </div>
       </div>
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Division</TableHead>
-              <TableHead>Year</TableHead>
-              <TableHead>Semester</TableHead>
-              <TableHead>Academic Year</TableHead>
-              <TableHead>Department</TableHead>
-              <TableHead>Students</TableHead>
-              <TableHead className="text-center">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center">
-                  Loading...
-                </TableCell>
-              </TableRow>
-            ) : divisions.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground">
-                  No divisions found. Add one to get started.
-                </TableCell>
-              </TableRow>
-            ) : (
-              divisions.map((division) => (
-                <TableRow key={division.id}>
-                  <TableCell>{division.identity}</TableCell>
-                  <TableCell>Year {division.year}</TableCell>
-                  <TableCell>Sem {division.semester}</TableCell>
-                  <TableCell>{division.academicYear}</TableCell>
-                  <TableCell>
-                    {division.department?.name || 'Unknown'}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {division.studentIds && division.studentIds.length > 0 ? (
-                        <Badge variant="secondary">
-                          {division.studentIds.length} students
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary">
-                          No students enrolled
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex justify-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => openStudentDialog(division)}
-                        className="transition-colors hover:text-green-600 hover:border-green-600"
-                      >
-                        <Users className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleEdit(division)}
-                        className="transition-colors hover:text-blue-600 hover:border-blue-600"
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDelete(division.id)}
-                        className="transition-colors hover:text-red-600 hover:border-red-600"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {loading ? (
+    <div className="col-span-full text-center">Loading...</div>
+  ) : divisions.length === 0 ? (
+    <div className="col-span-full text-center text-muted-foreground">
+      No divisions found. Add one to get started.
+    </div>
+  ) : (
+    divisions.map((division) => (
+      <div key={division.id} className="rounded-lg border bg-card p-6 shadow-sm">
+        {/* Title Row */}
+        <div className="mb-4">
+          <h3 className="text-xl font-bold">
+            {division.department.name} - {division.identity}
+          </h3>
+        </div>
+
+        {/* Department Row */}
+        <div className="mb-2">
+          <p className="text-sm text-muted-foreground">
+            {division.department.name}
+          </p>
+        </div>
+
+        {/* Semester/Year Row */}
+        <div className="mb-4">
+          <p className="text-sm">
+            Year {division.year} • Sem {division.semester}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {division.academicYear}
+          </p>
+        </div>
+        <div className="mb-6 mt-4">
+  <Button
+    variant="secondary"
+    className="w-full border hover:text-blue-600 hover:border-blue-600 hover:border"
+    onClick={() => router.push(`/divisions/${division.id}/assign-students`)}
+  >
+    <Users className="h-4 w-4 mr-2" />
+    Assign Students
+    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+      divisionStudentCounts[division.id] === 0 
+        ? 'bg-red-100 text-red-600' 
+        : 'bg-blue-100 text-blue-600'
+    }`}>
+      {divisionStudentCounts[division.id] || 0} students
+    </span>
+  </Button>
+</div>
+        {/* detailed view Button */}
+        <div className="mb-6 mt-4">
+        <Button
+  variant="secondary"
+  className="w-full border hover:text-blue-600 hover:border-blue-600 hover:border"
+  onClick={() => router.push(`/divisions/${division.id}/subbatches`)}
+>
+  <GitBranch className="h-4 w-4 mr-2" />
+  Manage Sub-batches
+  <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+    (divisionSubBatches[division.id]?.length || 0) === 0 
+      ? 'bg-red-100 text-red-600' 
+      : 'bg-blue-100 text-blue-600'
+  }`}>
+    {divisionSubBatches[division.id]?.length || 0} batches
+  </span>
+</Button>
+</div>
+<div className="mb-6 mt-4">
+  <Button
+    variant="secondary"
+    className="w-full border hover:text-blue-600 hover:border-blue-600 hover:border"
+    onClick={() => router.push(`/divisions/${division.id}/courses`)}
+  >
+    <Users className="h-4 w-4 mr-2" />
+    Open Detailed View
+  </Button>
+</div>
+
+        {/* Edit/Delete Actions (aligned bottom) */}
+        <div className="mt-6 pt-4 border-t flex justify-end gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleEdit(division)}
+            className="text-blue-600 hover:border-blue-600"
+          >
+            <Pencil className="h-4 w-4 mr-2" />
+            Edit
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handleDelete(division.id)}
+            className="text-red-600 hover:border-red-600"
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Delete
+          </Button>
+        </div>
       </div>
+    ))
+  )}
+</div>
 
       {/* Student Enrollment Dialog */}
       <Dialog open={studentDialogOpen} onOpenChange={setStudentDialogOpen}>
@@ -507,6 +639,85 @@ export default function DivisionsPage() {
             </Button>
             <Button onClick={saveStudentAssignments}>
               Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Sub-batch Creation Dialog */}
+      <Dialog open={subBatchDialogOpen} onOpenChange={setSubBatchDialogOpen}>
+        <DialogContent className="sm:max-w-[525px]">
+          <DialogHeader>
+            <DialogTitle>Create Sub-batch</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Input
+                placeholder="Sub-batch Name"
+                value={newSubBatch.subBatchName}
+                onChange={(e) => setNewSubBatch({ ...newSubBatch, subBatchName: e.target.value })}
+                className="col-span-4"
+              />
+            </div>
+            {selectedDivisionForSubBatch && (
+              <div className="text-sm text-muted-foreground mb-4">
+                Division: {selectedDivisionForSubBatch.department.name} - {selectedDivisionForSubBatch.identity}
+              </div>
+            )}
+            
+            {/* Sub-batches List */}
+            <div className="space-y-4">
+              <h3 className="font-medium">Existing Sub-batches</h3>
+              <div className="grid grid-cols-1 gap-4">
+                {selectedDivisionForSubBatch && divisionSubBatches[selectedDivisionForSubBatch.id]?.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No sub-batches created yet</p>
+                ) : (
+                  divisionSubBatches[selectedDivisionForSubBatch?.id || 0]?.map((batch) => (
+                    <div key={batch.id} className="flex items-center justify-between p-3 rounded-lg border bg-card">
+                      <div>
+                        <p className="font-medium">{batch.subBatchName}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {batch.studentIds?.length || 0} students
+                        </p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEditSubBatch(batch)}
+                          className="text-blue-600 hover:border-blue-600"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDeleteSubBatch(batch.id!, selectedDivisionForSubBatch?.id!)}
+                          className="text-red-600 hover:border-red-600"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => {
+              setSubBatchDialogOpen(false);
+              setEditingSubBatchId(null);
+              setNewSubBatch({
+                subBatchName: '',
+                divisionId: selectedDivisionForSubBatch?.id || 0,
+                studentIds: []
+              });
+            }}>
+              Cancel
+            </Button>
+            <Button onClick={editingSubBatchId ? handleUpdateSubBatch : handleCreateSubBatch}>
+              {editingSubBatchId ? 'Update Sub-batch' : 'Create Sub-batch'}
             </Button>
           </DialogFooter>
         </DialogContent>

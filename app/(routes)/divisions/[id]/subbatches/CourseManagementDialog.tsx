@@ -66,8 +66,8 @@ export function CourseManagementDialog({
         const allCourses = await coursesResponse.json();
         setCourses(allCourses);
 
-        // Fetch selected courses for this subbatch
-        const selectedResponse = await fetch(`http://localhost:8080/subbatches/${subBatchId}/courses`);
+        // Fetch selected courses for this subbatch using the new endpoint
+        const selectedResponse = await fetch(`http://localhost:8080/periods/subbatch/${subBatchId}/courses`);
         if (!selectedResponse.ok) throw new Error('Failed to fetch selected courses');
         const selectedData = await selectedResponse.json();
         setSelectedCourses(selectedData);

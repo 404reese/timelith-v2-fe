@@ -58,9 +58,13 @@ export default function TimeslotPage() {
   const handleAddTimeslot = async () => {
     const newEntries = selectedDays.map((day) => ({
       dayOfWeek: day.toUpperCase(),
-      startTime,
-      endTime,
-      breaks,
+      startTime: startTime + ":00",
+      endTime: endTime + ":00",
+      breaks: breaks.map(breakItem => ({
+        dayOfWeek: day.toUpperCase(),
+        startTime: breakItem.startTime + ":00",
+        endTime: breakItem.endTime + ":00"
+      })),
     }));
 
     try {

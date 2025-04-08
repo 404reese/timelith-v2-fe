@@ -6,6 +6,12 @@ const Help = () => {
       <h1 className="text-3xl font-bold mb-8">Help Center</h1>
       
       <section className="mb-8">
+        <a href="">
+        <button className="">
+          Talk to agent
+        </button>
+        </a>
+        
         <h2 className="text-2xl font-semibold mb-4">Getting Started</h2>
         <div className="prose bg-gray-50 p-6 rounded-lg">
           <ol className="list-decimal pl-5 space-y-3">

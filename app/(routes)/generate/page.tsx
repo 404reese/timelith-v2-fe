@@ -10,7 +10,7 @@ const Generate = () => {
   const intervalRef = useRef<NodeJS.Timeout>();
   const timerRef = useRef<NodeJS.Timeout>();
   const router = useRouter();
-
+  
   const pollStatus = async (jobId: string) => {
     try {
       const statusRes = await fetch(`http://localhost:8081/time-table/${jobId}/status`);

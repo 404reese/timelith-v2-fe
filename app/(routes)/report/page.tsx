@@ -1,16 +1,18 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
 
 const Report = () => {
   const [timetableData, setTimetableData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [groqAnalysis, setGroqAnalysis] = useState('');
+  const [geminiAnalysis, setGeminiAnalysis] = useState('');
   const [analyzeLoading, setAnalyzeLoading] = useState(false);
+  const [showMarkdown, setShowMarkdown] = useState(true);
   const searchParams = useSearchParams();
   const router = useRouter();
   const jobId = searchParams.get('jobId');
-
+  
   useEffect(() => {
     const fetchTimetable = async () => {
       try {
@@ -26,41 +28,41 @@ const Report = () => {
     };
     fetchTimetable();
   }, [jobId]);
-
-  const analyzeWithGroq = async () => {
+  
+  const analyzeWithGemini = async () => {
     setAnalyzeLoading(true);
-    setGroqAnalysis(''); // Clear previous analysis
+    setGeminiAnalysis(''); // Clear previous analysis
     try {
-      const response = await fetch('/api/groq', {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          scoreExplanation: timetableData.scoreExplanation 
+        body: JSON.stringify({
+          scoreExplanation: timetableData.scoreExplanation
         }),
       });
-      
+     
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+     
       const data = await response.json();
-      
+     
       if (data.error) {
         throw new Error(data.error);
       }
-      
-      setGroqAnalysis(data.analysis || "No analysis content received");
+     
+      setGeminiAnalysis(data.analysis || "No analysis content received");
     } catch (error) {
-      console.error('Groq Analysis Error:', error);
-      setGroqAnalysis(`Error: ${error instanceof Error ? error.message : 'Failed to analyze'}`);
+      console.error('Gemini Analysis Error:', error);
+      setGeminiAnalysis(`Error: ${error instanceof Error ? error.message : 'Failed to analyze'}`);
     } finally {
       setAnalyzeLoading(false);
     }
   };
-
+  
   if (loading) return <div className="p-4">Loading report...</div>;
   if (!timetableData) return <div className="p-4">No report data available</div>;
-
+  
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
@@ -72,7 +74,6 @@ const Report = () => {
           Back to Timetable
         </button>
       </div>
-
       <div className="bg-white border rounded shadow p-6">
         <div className="text-xl font-semibold mb-4">
           Score: <span className="font-mono">{timetableData.score}</span>
@@ -90,18 +91,30 @@ const Report = () => {
           <div className="flex items-center gap-4">
             <h2 className="text-lg font-bold">AI Analysis:</h2>
             <button
-              onClick={analyzeWithGroq}
+              onClick={analyzeWithGemini}
               disabled={analyzeLoading}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
             >
-              {analyzeLoading ? 'Analyzing...' : 'Analyze with Groq'}
+              {analyzeLoading ? 'Analyzing...' : 'Analyze with Gemini'}
             </button>
+            {geminiAnalysis && (
+              <button
+                onClick={() => setShowMarkdown(!showMarkdown)}
+                className="text-blue-500 hover:text-blue-700 underline"
+              >
+                {showMarkdown ? 'Show Raw Text' : 'Show Formatted'}
+              </button>
+            )}
           </div>
-          {groqAnalysis && (
+          {geminiAnalysis && showMarkdown ? (
+            <div className="prose max-w-none mt-4 bg-gray-50 p-4 rounded border">
+              <ReactMarkdown>{geminiAnalysis}</ReactMarkdown>
+            </div>
+          ) : geminiAnalysis ? (
             <pre className="whitespace-pre-wrap font-mono text-sm bg-gray-50 p-4 rounded border mt-4">
-              {groqAnalysis}
+              {geminiAnalysis}
             </pre>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

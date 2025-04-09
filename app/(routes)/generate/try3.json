@@ -1,0 +1,1848 @@
+{
+    "periods": [
+      {
+        "id": "6351",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6353",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "9",
+          "courseCode": "AIPR42",
+          "courseName": "Project Based Learning - II",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6352",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6355",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6354",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6357",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6356",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY1",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "1",
+          "101",
+          "201",
+          "51",
+          "151"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6358",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "11",
+          "courseCode": "AIXS49",
+          "courseName": "Skill Based Lab - VI (Language)",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6359",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6362",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6360",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6363",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6361",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6364",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY2",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "451",
+          "301",
+          "401",
+          "251",
+          "351"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6365",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6366",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "11",
+          "courseCode": "AIXS49",
+          "courseName": "Skill Based Lab - VI (Language)",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6369",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6367",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6370",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6368",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6371",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY4",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "651",
+          "701"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6372",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6373",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6378",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "11",
+          "courseCode": "AIXS49",
+          "courseName": "Skill Based Lab - VI (Language)",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6374",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6375",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6376",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6377",
+        "divisionName": {
+          "id": "6201",
+          "yearInWords": null,
+          "identity": "A",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY3",
+        "subject": {
+          "id": "1",
+          "courseCode": "AIC401",
+          "courseName": "Mathematics for Data Science",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "551",
+          "501",
+          "601"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6381",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "9",
+          "courseCode": "AIPR42",
+          "courseName": "Project Based Learning - II",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6379",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "11",
+          "courseCode": "AIXS49",
+          "courseName": "Skill Based Lab - VI (Language)",
+          "type": "Practical"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT2H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6380",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6384",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "3",
+          "courseCode": "AIC403",
+          "courseName": "Operating Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6382",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6385",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "3",
+          "courseCode": "AIC403",
+          "courseName": "Operating Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6383",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "2",
+          "courseCode": "AIC402",
+          "courseName": "Database Management Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      },
+      {
+        "id": "6386",
+        "divisionName": {
+          "id": "6202",
+          "yearInWords": null,
+          "identity": "B",
+          "semester": "IV",
+          "academicYear": "2024-25",
+          "department": {
+            "name": "Artificial Intelligence And Data Science",
+            "acronym": "AI&DS"
+          }
+        },
+        "batch": "SY5",
+        "subject": {
+          "id": "3",
+          "courseCode": "AIC403",
+          "courseName": "Operating Systems",
+          "type": "Lecture"
+        },
+        "studentGroup": [
+          "3301",
+          "3201",
+          "3101",
+          "3001",
+          "3251",
+          "3151",
+          "3051"
+        ],
+        "duration": "PT1H",
+        "instructor": null,
+        "resourceRoom": null,
+        "timeslot": null
+      }
+    ],
+    "instructors": [
+      {
+        "id": "1",
+        "fullName": "Mr. Pankaj Vinayak Deshmukh",
+        "initials": "PVD",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "1",
+            "courseCode": "AIC401",
+            "courseName": "Mathematics for Data Science",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "fullName": "Ms. Vidya Ravindra Sagvekar",
+        "initials": "VRS",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "2",
+            "courseCode": "AIC402",
+            "courseName": "Database Management Systems",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "fullName": "Ms. Sejal Bhavik Shah",
+        "initials": "SBS",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "3",
+            "courseCode": "AIC403",
+            "courseName": "Operating Systems",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "fullName": "Ms. Prajakta Ashok Jadhav",
+        "initials": "PAJ",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "4",
+            "courseCode": "AIC404",
+            "courseName": "Artificial Intelligence and Ethics",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "fullName": "Mr. Ganesh Bhagwanrao Wadmare",
+        "initials": "GBW",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "5",
+            "courseCode": "AIC405M2",
+            "courseName": "IoT & Cloud Computing",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "fullName": "Mr. Sandeep Shivram Mishra",
+        "initials": "SSM",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "6",
+            "courseCode": "AICL401",
+            "courseName": "Mathematics for Data Science Tutorial",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "fullName": "Ms. Medha Sanjay Asurlekar",
+        "initials": "MSA",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "8",
+            "courseCode": "AIL403",
+            "courseName": "Operating Systems Lab",
+            "type": "Practical"
+          },
+          {
+            "id": "7",
+            "courseCode": "AIL402",
+            "courseName": "Discrete Mathematical Structures Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "fullName": "Ms. Vaishali Amit Dabholkar",
+        "initials": "VAD",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "9",
+            "courseCode": "AIPR42",
+            "courseName": "Project Based Learning - II",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "9",
+        "fullName": "Ms. Pradnya Prabhakar Jadhav",
+        "initials": "PPJ",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "10",
+            "courseCode": "AIXS48",
+            "courseName": "Skill Based Lab - V (Python Programming)",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "10",
+        "fullName": "Mr. Nitin Jaywant Kenjale",
+        "initials": "NJK",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": [
+          {
+            "id": "11",
+            "courseCode": "AIXS49",
+            "courseName": "Skill Based Lab - VI (Language)",
+            "type": "Practical"
+          },
+          {
+            "id": "12",
+            "courseCode": "AIL405M2",
+            "courseName": "IoT & Cloud Computing Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "11",
+        "fullName": "Ms. Archana Vilas Kshirsagar",
+        "initials": "AVK",
+        "departmentPreference": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "teachingCourses": []
+      }
+    ],
+    "rooms": [
+      {
+        "id": "1",
+        "roomName": "201",
+        "roomType": "CLASSROOM",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "4",
+            "courseCode": "AIC404",
+            "courseName": "Artificial Intelligence and Ethics",
+            "type": "Lecture"
+          },
+          {
+            "id": "5",
+            "courseCode": "AIC405M2",
+            "courseName": "IoT & Cloud Computing",
+            "type": "Lecture"
+          },
+          {
+            "id": "1",
+            "courseCode": "AIC401",
+            "courseName": "Mathematics for Data Science",
+            "type": "Lecture"
+          },
+          {
+            "id": "6",
+            "courseCode": "AICL401",
+            "courseName": "Mathematics for Data Science Tutorial",
+            "type": "Practical"
+          },
+          {
+            "id": "2",
+            "courseCode": "AIC402",
+            "courseName": "Database Management Systems",
+            "type": "Lecture"
+          },
+          {
+            "id": "3",
+            "courseCode": "AIC403",
+            "courseName": "Operating Systems",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "roomName": "202",
+        "roomType": "CLASSROOM",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "4",
+            "courseCode": "AIC404",
+            "courseName": "Artificial Intelligence and Ethics",
+            "type": "Lecture"
+          },
+          {
+            "id": "5",
+            "courseCode": "AIC405M2",
+            "courseName": "IoT & Cloud Computing",
+            "type": "Lecture"
+          },
+          {
+            "id": "1",
+            "courseCode": "AIC401",
+            "courseName": "Mathematics for Data Science",
+            "type": "Lecture"
+          },
+          {
+            "id": "6",
+            "courseCode": "AICL401",
+            "courseName": "Mathematics for Data Science Tutorial",
+            "type": "Practical"
+          },
+          {
+            "id": "2",
+            "courseCode": "AIC402",
+            "courseName": "Database Management Systems",
+            "type": "Lecture"
+          },
+          {
+            "id": "3",
+            "courseCode": "AIC403",
+            "courseName": "Operating Systems",
+            "type": "Lecture"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "roomName": "205-A",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "8",
+            "courseCode": "AIL403",
+            "courseName": "Operating Systems Lab",
+            "type": "Practical"
+          },
+          {
+            "id": "7",
+            "courseCode": "AIL402",
+            "courseName": "Discrete Mathematical Structures Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "roomName": "205-B",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "11",
+            "courseCode": "AIXS49",
+            "courseName": "Skill Based Lab - VI (Language)",
+            "type": "Practical"
+          },
+          {
+            "id": "12",
+            "courseCode": "AIL405M2",
+            "courseName": "IoT & Cloud Computing Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "roomName": "207",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "10",
+            "courseCode": "AIXS48",
+            "courseName": "Skill Based Lab - V (Python Programming)",
+            "type": "Practical"
+          },
+          {
+            "id": "9",
+            "courseCode": "AIPR42",
+            "courseName": "Project Based Learning - II",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "roomName": "402-A",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "8",
+            "courseCode": "AIL403",
+            "courseName": "Operating Systems Lab",
+            "type": "Practical"
+          },
+          {
+            "id": "10",
+            "courseCode": "AIXS48",
+            "courseName": "Skill Based Lab - V (Python Programming)",
+            "type": "Practical"
+          },
+          {
+            "id": "11",
+            "courseCode": "AIXS49",
+            "courseName": "Skill Based Lab - VI (Language)",
+            "type": "Practical"
+          },
+          {
+            "id": "12",
+            "courseCode": "AIL405M2",
+            "courseName": "IoT & Cloud Computing Lab",
+            "type": "Practical"
+          },
+          {
+            "id": "9",
+            "courseCode": "AIPR42",
+            "courseName": "Project Based Learning - II",
+            "type": "Practical"
+          },
+          {
+            "id": "7",
+            "courseCode": "AIL402",
+            "courseName": "Discrete Mathematical Structures Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "roomName": "402-B",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "8",
+            "courseCode": "AIL403",
+            "courseName": "Operating Systems Lab",
+            "type": "Practical"
+          },
+          {
+            "id": "7",
+            "courseCode": "AIL402",
+            "courseName": "Discrete Mathematical Structures Lab",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "roomName": "401-A",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "10",
+            "courseCode": "AIXS48",
+            "courseName": "Skill Based Lab - V (Python Programming)",
+            "type": "Practical"
+          },
+          {
+            "id": "9",
+            "courseCode": "AIPR42",
+            "courseName": "Project Based Learning - II",
+            "type": "Practical"
+          }
+        ]
+      },
+      {
+        "id": "9",
+        "roomName": "401-B",
+        "roomType": "LAB",
+        "homeDepartment": {
+          "name": "Artificial Intelligence And Data Science",
+          "acronym": "AI&DS"
+        },
+        "compatibleCourses": [
+          {
+            "id": "11",
+            "courseCode": "AIXS49",
+            "courseName": "Skill Based Lab - VI (Language)",
+            "type": "Practical"
+          },
+          {
+            "id": "12",
+            "courseCode": "AIL405M2",
+            "courseName": "IoT & Cloud Computing Lab",
+            "type": "Practical"
+          }
+        ]
+      }
+    ],
+    "timeslots": [
+      {
+        "id": 6551,
+        "dayOfWeek": "MONDAY",
+        "startTime": "08:30:00"
+      },
+      {
+        "id": 6552,
+        "dayOfWeek": "MONDAY",
+        "startTime": "09:30:00"
+      },
+      {
+        "id": 6553,
+        "dayOfWeek": "MONDAY",
+        "startTime": "10:40:00"
+      },
+      {
+        "id": 6554,
+        "dayOfWeek": "MONDAY",
+        "startTime": "11:40:00"
+      },
+      {
+        "id": 6555,
+        "dayOfWeek": "MONDAY",
+        "startTime": "13:10:00"
+      },
+      {
+        "id": 6556,
+        "dayOfWeek": "MONDAY",
+        "startTime": "14:10:00"
+      },
+      {
+        "id": 6557,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "08:30:00"
+      },
+      {
+        "id": 6558,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "09:30:00"
+      },
+      {
+        "id": 6559,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "10:40:00"
+      },
+      {
+        "id": 6560,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "11:40:00"
+      },
+      {
+        "id": 6561,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "13:10:00"
+      },
+      {
+        "id": 6562,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "14:10:00"
+      },
+      {
+        "id": 6563,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "08:30:00"
+      },
+      {
+        "id": 6564,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "09:30:00"
+      },
+      {
+        "id": 6565,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "10:40:00"
+      },
+      {
+        "id": 6566,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "11:40:00"
+      },
+      {
+        "id": 6567,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "13:10:00"
+      },
+      {
+        "id": 6568,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "14:10:00"
+      },
+      {
+        "id": 6569,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "08:30:00"
+      },
+      {
+        "id": 6570,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "09:30:00"
+      },
+      {
+        "id": 6571,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "10:40:00"
+      },
+      {
+        "id": 6572,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "11:40:00"
+      },
+      {
+        "id": 6573,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "13:10:00"
+      },
+      {
+        "id": 6574,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "14:10:00"
+      },
+      {
+        "id": 6575,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "08:30:00"
+      },
+      {
+        "id": 6576,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "09:30:00"
+      },
+      {
+        "id": 6577,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "10:40:00"
+      },
+      {
+        "id": 6578,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "11:40:00"
+      },
+      {
+        "id": 6579,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "13:10:00"
+      },
+      {
+        "id": 6580,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "14:10:00"
+      }
+    ],
+    "recesses": [
+      {
+        "id": 6451,
+        "dayOfWeek": "MONDAY",
+        "startTime": "10:30:00",
+        "endTime": "10:40:00"
+      },
+      {
+        "id": 6452,
+        "dayOfWeek": "MONDAY",
+        "startTime": "12:40:00",
+        "endTime": "13:10:00"
+      },
+      {
+        "id": 6453,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "10:30:00",
+        "endTime": "10:40:00"
+      },
+      {
+        "id": 6454,
+        "dayOfWeek": "TUESDAY",
+        "startTime": "12:40:00",
+        "endTime": "13:10:00"
+      },
+      {
+        "id": 6455,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "10:30:00",
+        "endTime": "10:40:00"
+      },
+      {
+        "id": 6456,
+        "dayOfWeek": "WEDNESDAY",
+        "startTime": "12:40:00",
+        "endTime": "13:10:00"
+      },
+      {
+        "id": 6457,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "10:30:00",
+        "endTime": "10:40:00"
+      },
+      {
+        "id": 6458,
+        "dayOfWeek": "THURSDAY",
+        "startTime": "12:40:00",
+        "endTime": "13:10:00"
+      },
+      {
+        "id": 6459,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "10:30:00",
+        "endTime": "10:40:00"
+      },
+      {
+        "id": 6460,
+        "dayOfWeek": "FRIDAY",
+        "startTime": "12:40:00",
+        "endTime": "13:10:00"
+      }
+    ],
+    "timeBounds": [
+      {
+        "dayOfWeek": "MONDAY",
+        "endTime": "15:10:00"
+      },
+      {
+        "dayOfWeek": "TUESDAY",
+        "endTime": "15:10:00"
+      },
+      {
+        "dayOfWeek": "WEDNESDAY",
+        "endTime": "15:10:00"
+      },
+      {
+        "dayOfWeek": "THURSDAY",
+        "endTime": "15:10:00"
+      },
+      {
+        "dayOfWeek": "FRIDAY",
+        "endTime": "15:10:00"
+      }
+    ]
+  }

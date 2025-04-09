@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // output: 'export', // Commented out to disable static export and resolve generateStaticParams error
   eslint: {
     ignoreDuringBuilds: true,
   },

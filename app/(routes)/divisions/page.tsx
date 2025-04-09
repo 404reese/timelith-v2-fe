@@ -571,10 +571,10 @@ export default function DivisionsPage() {
   <Button
     variant="secondary"
     className="w-full border hover:text-blue-600 hover:border-blue-600 hover:border"
-    onClick={() => router.push(`/divisions/${division.id}/courses`)}
+    onClick={() => router.push(`/divisions/${division.id}/periods`)}
   >
     <Users className="h-4 w-4 mr-2" />
-    Open Detailed View
+    View Schedule
   </Button>
 </div>
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pencil, Trash2, ChevronLeft, Users, BookOpen } from "lucide-react";
+import { Pencil, Trash2, ChevronLeft, Users, BookOpen, Eye } from "lucide-react"; // Added Eye icon
 import { StudentManagementDialog } from './StudentManagementDialog';
 import { CourseManagementDialog } from './CourseManagementDialog';
 
@@ -251,97 +251,130 @@ export default function SubBatchManagementClient({
       </h1>
 
       {/* Form for Creating/Updating Sub-Batches */}
-      <div className="grid gap-4 mb-8">
+      <div className="flex items-center gap-4 mb-8"> {/* Changed grid to flex */}
         <Input
           placeholder="New Sub-batch Name"
           value={newSubBatch.subBatchName}
           onChange={(e) =>
             setNewSubBatch({ ...newSubBatch, subBatchName: e.target.value })
           }
-          className="max-w-md"
+          className="flex-grow" /* Allow input to take available space */
         />
         <Button
           onClick={editingSubBatchId ? handleUpdateSubBatch : handleCreateSubBatch}
-          className="max-w-md"
+          className="flex-shrink-0" /* Prevent button from shrinking */
         >
           {editingSubBatchId ? "Update Sub-batch" : "Create Sub-batch"}
         </Button>
       </div>
 
-      {/* List of Sub-Batches */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Existing Sub-batches</h2>
+      {/* List of Sub-Batches - Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {subBatches.length === 0 ? (
-          <p className="text-muted-foreground">No sub-batches created yet</p>
+          <div className="col-span-full text-center text-muted-foreground">
+            No sub-batches created yet. Use the form above to add one.
+          </div>
         ) : (
           subBatches.map((batch) => (
-            <div key={batch.id} className="border rounded-lg p-4 space-y-4">
-              {/* Sub-Batch Header */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">{batch.subBatchName}</p>
+            <div key={batch.id} className="rounded-lg border bg-card p-6 shadow-sm flex flex-col justify-between">
+              <div> {/* Content Area */}
+                {/* Title Row */}
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold">
+                    {batch.subBatchName}
+                  </h3>
+                </div>
+
+                {/* Student Count */}
+                <div className="mb-4">
                   <p className="text-sm text-muted-foreground">
-                    {studentCounts[batch.id!] ?? 'Loading...'} students
+                    {studentCounts[batch.id!] ?? 'Loading...'} students assigned
                   </p>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setEditingSubBatchId(batch.id!);
-                      setNewSubBatch(batch);
-                    }}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDeleteSubBatch(batch.id!)}
-                    className="text-red-600 hover:border-red-600"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+
+                {/* Action Buttons */}
+                <div className="space-y-2 mb-6 mt-4">
                   <Button
                     variant="secondary"
-                    size="sm"
+                    className="w-full border hover:text-blue-600 hover:border-blue-600"
                     onClick={() => handleManageStudents(batch.id!)}
                   >
                     <Users className="h-4 w-4 mr-2" />
                     Manage Students
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+                      (studentCounts[batch.id!] ?? 0) === 0
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-blue-100 text-blue-600'
+                    }`}>
+                      {studentCounts[batch.id!] ?? 0}
+                    </span>
                   </Button>
                   <Button
                     variant="secondary"
-                    size="sm"
+                    className="w-full border hover:text-green-600 hover:border-green-600"
                     onClick={() => setSelectedSubBatchForCourses(batch.id!)}
                   >
                     <BookOpen className="h-4 w-4 mr-2" />
                     Assign Courses
+                    {/* Add course count badge here if available */}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    className="w-full border hover:text-purple-600 hover:border-purple-600"
+                    onClick={() => router.push(`/divisions/${division.id}/subbatches/${batch.id}/periods`)}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    View Schedule
                   </Button>
                 </div>
               </div>
 
-              {/* Dialogs */}
-              {selectedSubBatchId && (
+              {/* Edit/Delete Actions (aligned bottom) */}
+              <div className="mt-auto pt-4 border-t flex justify-end gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditingSubBatchId(batch.id!);
+                    setNewSubBatch(batch);
+                  }}
+                  className="text-blue-600 hover:border-blue-600"
+                >
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleDeleteSubBatch(batch.id!)}
+                  className="text-red-600 hover:border-red-600"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
+                </Button>
+              </div>
+
+              {/* Dialogs - Rendered outside the card structure but linked */}
+              {/* Note: Keeping dialogs here might cause re-renders. Consider moving state up if performance issues arise. */}
+              {selectedSubBatchId === batch.id && (
                 <StudentManagementDialog
-                  open={selectedSubBatchId !== null}
+                  open={true} // Controlled by selectedSubBatchId state
                   onOpenChange={(open) => !open && setSelectedSubBatchId(null)}
                   subBatchId={selectedSubBatchId}
                   divisionId={division.id}
-                  subBatchName={subBatches.find(b => b.id === selectedSubBatchId)?.subBatchName || ''}
+                  subBatchName={batch.subBatchName}
                   onSave={async (studentIds) => {
                     await handleSaveStudents(selectedSubBatchId, studentIds);
                   }}
                 />
               )}
-              {selectedSubBatchForCourses && (
+              {selectedSubBatchForCourses === batch.id && (
                 <CourseManagementDialog
-                  open={selectedSubBatchForCourses !== null}
+                  open={true} // Controlled by selectedSubBatchForCourses state
                   onOpenChange={(open) => !open && setSelectedSubBatchForCourses(null)}
                   subBatchId={selectedSubBatchForCourses}
                   divisionId={division.id}
-                  subBatchName={subBatches.find(b => b.id === selectedSubBatchForCourses)?.subBatchName || ''}
+                  subBatchName={batch.subBatchName}
                   onSave={async (courseIds) => {
                     await handleSaveCourses(selectedSubBatchForCourses, courseIds);
                   }}

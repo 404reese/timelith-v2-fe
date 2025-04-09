@@ -1,51 +1,57 @@
-import Groq from "groq-sdk";
+// pages/api/groq.js or app/api/groq/route.js (depending on your Next.js version)
+
 import { NextResponse } from 'next/server';
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY || ''
-});
-
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const { scoreExplanation } = await request.json();
     
-    if (!scoreExplanation) {
+    // Your Groq API key should be stored in environment variables
+    const apiKey = process.env.GROQ_API_KEY;
+    
+    if (!apiKey) {
       return NextResponse.json(
-        { error: "scoreExplanation is required" },
-        { status: 400 }
+        { error: 'Groq API key is not configured' },
+        { status: 500 }
       );
     }
-
-    const completion = await groq.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: "You are an expert in analyzing university timetable schedules. Provide detailed insights about the scheduling quality and potential improvements."
-        },
-        {
-          role: "user",
-          content: `Analyze this timetable score explanation: ${scoreExplanation}`
-        }
-      ],
-      model: "mixtral-8x7b-32768",
-      temperature: 0.7,
-      max_tokens: 1000
-    });
-
-    const analysis = completion.choices[0]?.message?.content;
     
-    if (!analysis) {
-      throw new Error("No analysis content received");
-    }
-
-    return NextResponse.json({ analysis });
-  } catch (error: any) {
-    console.error("Groq API error:", error.message);
-    return NextResponse.json(
-      { 
-        error: "Failed to analyze data",
-        details: error.message 
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
       },
+      body: JSON.stringify({
+        model: 'llama3-70b-8192', // Or whichever model you're using
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert in analyzing timetable data and providing insights. Format your response in Markdown with proper headings, bullet points, and organized sections.'
+          },
+          {
+            role: 'user',
+            content: `Analyze this timetable score explanation and provide a detailed breakdown, insights, and recommendations in proper Markdown format with headings, bullet points, and good organization:\n\n${scoreExplanation}`
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 4000
+      })
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to get response from Groq API');
+    }
+    
+    const data = await response.json();
+    const analysis = data.choices[0]?.message?.content || '';
+    
+    return NextResponse.json({ analysis });
+  } catch (error) {
+    console.error('API Error:', error);
+    return NextResponse.json(
+      { error: error.message || 'An unknown error occurred' },
       { status: 500 }
     );
   }

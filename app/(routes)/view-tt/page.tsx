@@ -114,9 +114,11 @@ const ViewTimetable = () => {
             </div>
 
             {timeColumns.map((colTime, colIdx) => {
-              const period = groupedPeriods[day].find((p) => {
-                const start = parseTimeToMinutes(p.startTime || p.timeslot.startTime);
-                const durationInMinutes = parseDuration(p.duration);
+              // Find all periods that overlap with this cell's time slot
+              const periodsAtCell = groupedPeriods[day].filter((p) => {
+                const start = parseTimeToMinutes(p.timeslot.startTime);
+                const durationInMinutes =
+                  p.subject.type === 'Practical' ? 120 : parseDuration(p.duration);
                 const end = start + durationInMinutes;
                 return start <= colTime && end > colTime;
               });
@@ -126,14 +128,24 @@ const ViewTimetable = () => {
                   key={`${day}-${colIdx}`}
                   className="bg-white relative border-r border-b min-h-[80px]"
                 >
-                  {period && parseTimeToMinutes(period.timeslot.startTime) === colTime && (
+                  {periodsAtCell.map((period, idx) => (
                     <div
-                      className="absolute inset-1 bg-blue-50 p-2 rounded border border-blue-200"
+                      key={period.id || idx}
+                      className={`absolute inset-1 p-2 rounded border ${
+                        period.subject.type === 'Practical'
+                          ? 'bg-green-50 border-green-200'
+                          : 'bg-blue-50 border-blue-200'
+                      }`}
                       style={{
-                        gridColumn: `${colIdx + 2} / span ${Math.ceil(parseDuration(period.duration) / 60)}`,
+                        gridColumn: `${colIdx + 2} / span ${
+                          period.subject.type === 'Practical'
+                            ? 2
+                            : Math.ceil(parseDuration(period.duration) / 60)
+                        }`,
+                        position: "relative",
                       }}
                     >
-                      <div className="text-sm font-semibold truncate">
+                      <div className="text-sm font-semibold break-words">
                         {period.subject.courseCode} - {period.subject.courseName}
                       </div>
                       <div className="text-xs text-gray-600 truncate">
@@ -142,11 +154,8 @@ const ViewTimetable = () => {
                       <div className="text-xs text-gray-500 truncate">
                         {period.resourceRoom?.roomName || 'Room'} | {period.subject.type}
                       </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        Group: {period.studentGroup.join(', ')}
-                      </div>
                     </div>
-                  )}
+                  ))}
                 </div>
               );
             })}

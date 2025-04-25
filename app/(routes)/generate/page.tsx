@@ -7,6 +7,7 @@ const Generate = () => {
   const [secondResponse, setSecondResponse] = useState<string>('');
   const [status, setStatus] = useState<string>('');
   const [timer, setTimer] = useState<number>(5);
+  const [jobId, setJobId] = useState<string>(''); // Add jobId state
   const intervalRef = useRef<NodeJS.Timeout>();
   const timerRef = useRef<NodeJS.Timeout>();
   const router = useRouter();
@@ -52,12 +53,24 @@ const Generate = () => {
       // Wait for 2 seconds then make second API call
       setTimeout(async () => {
         try {
-          const secondRes = await fetch('http://localhost:8081/time-table');
+          // Send data from 8080 as body to 8081
+          const secondRes = await fetch('http://localhost:8081/time-table', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data), // Use data from 8080
+          });
           const secondData = await secondRes.json();
           setSecondResponse(JSON.stringify(secondData, null, 2)); // Pretty print JSON
           
-          // Start polling with the job ID
-          const jobId = secondData[0]; // Assuming the job ID is the first element
+          // Extract jobId from response (assume { jobId: "..." })
+          const jobId = secondData.jobId || secondData[0];
+          setJobId(jobId || ''); // Save jobId to state
+          if (!jobId) {
+            setStatus('No jobId returned from backend');
+            return;
+          }
           intervalRef.current = setInterval(() => pollStatus(jobId), 2000);
           
           // Start timer with redirect
@@ -101,8 +114,14 @@ const Generate = () => {
           <pre className="whitespace-pre-wrap break-words">{response}</pre>
         </div>
         <div className="overflow-y-auto border border-gray-300 rounded p-4 bg-white">
-          JOB ID
-          <pre className="whitespace-pre-wrap break-words">{secondResponse}</pre>
+          <div>
+            <span className="font-bold">Job ID: </span>
+            <span className="text-blue-700">{jobId}</span>
+          </div>
+          <div className="mt-2">
+            <span className="font-bold">Raw Response:</span>
+            <pre className="whitespace-pre-wrap break-words">{secondResponse}</pre>
+          </div>
           <div className="mt-2">
             <h3 className="font-bold">Status:</h3>
             <pre className="whitespace-pre-wrap break-words">{status}</pre>

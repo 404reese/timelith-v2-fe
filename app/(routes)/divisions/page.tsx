@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Pencil, Trash2, Users, GitBranch } from "lucide-react";
+import { Plus, Pencil, Trash2, Users, GitBranch, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DepartmentSelect from "@/components/custom/DepartmentSelect";
@@ -573,8 +573,8 @@ export default function DivisionsPage() {
     className="w-full border hover:text-blue-600 hover:border-blue-600 hover:border"
     onClick={() => router.push(`/divisions/${division.id}/periods`)}
   >
-    <Users className="h-4 w-4 mr-2" />
-    View Schedule
+    <Eye className="h-4 w-4 mr-2" />
+    Detailed Period View
   </Button>
 </div>
 

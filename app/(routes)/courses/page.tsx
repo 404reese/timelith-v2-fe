@@ -188,23 +188,27 @@ export default function CoursesPage() {
             </SelectContent>
           </Select>
           <Select
-            value={String(newCourse.department.id)}
-            onValueChange={(value) => setNewCourse({
-              ...newCourse,
-              department: departments.find(d => d.id === Number(value)) || { id: Number(value), name: "", acronym: "N/A" }
-            })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Department" />
-            </SelectTrigger>
-            <SelectContent>
-              {departments.map((dept) => (
-                <SelectItem key={dept.id} value={String(dept.id)}>
-                  {dept.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+  value={newCourse.department.id === 0 ? "" : String(newCourse.department.id)}
+  onValueChange={(value) => {
+    const deptId = Number(value);
+    const selectedDept = departments.find(d => d.id === deptId);
+    setNewCourse({
+      ...newCourse,
+      department: selectedDept || { id: 0, name: "", acronym: "" },
+    });
+  }}
+>
+  <SelectTrigger className="w-full">
+    <SelectValue placeholder="Select Department" />
+  </SelectTrigger>
+  <SelectContent>
+    {departments.map((dept) => (
+      <SelectItem key={dept.id} value={String(dept.id)}>
+        {dept.name}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
           <Select
             value={String(newCourse.type)}
             onValueChange={(value) => {
@@ -214,7 +218,7 @@ export default function CoursesPage() {
               }
             }}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Course Type" />
             </SelectTrigger>
             <SelectContent>

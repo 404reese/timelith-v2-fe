@@ -27,6 +27,7 @@ const parseDuration = (duration) => {
 const ViewTimetable = () => {
   const [timetableData, setTimetableData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedDivision, setSelectedDivision] = useState('');
   const searchParams = useSearchParams();
   const router = useRouter();
   const jobId = searchParams.get('jobId');
@@ -38,6 +39,10 @@ const ViewTimetable = () => {
         if (!response.ok) throw new Error('Failed to fetch data');
         const data = await response.json();
         setTimetableData(data);
+        // Set default division to first found
+        if (data?.periods?.length > 0) {
+          setSelectedDivision(data.periods[0].divisionName.identity);
+        }
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -50,24 +55,44 @@ const ViewTimetable = () => {
   if (loading) return <div className="p-4">Loading timetable...</div>;
   if (!timetableData) return <div className="p-4">No timetable data available</div>;
 
-  // Process timeslots
+  // Extract unique divisions
+  const divisions = Array.from(
+    new Map(
+      timetableData.periods.map((p) => [
+        p.divisionName.identity,
+        {
+          identity: p.divisionName.identity,
+          department: p.divisionName.department.acronym,
+          semester: p.divisionName.semester,
+        },
+      ])
+    ).values()
+  );
+
+  // Filter periods for selected division
+  const filteredPeriods = timetableData.periods.filter(
+    (p) => p.divisionName.identity === selectedDivision
+  );
+
+  // Process timeslots for filtered periods only
   const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
-  // Get all unique timeslots across days
-  const allTimeslots = timetableData.timeslots
-    .map((ts) => ({
-      day: ts.dayOfWeek,
-      start: parseTimeToMinutes(ts.startTime),
-      end: parseTimeToMinutes(ts.startTime) + 60, // Default to 1-hour slots
+  // Get all unique timeslots across days for filtered periods
+  const allTimeslots = filteredPeriods
+    .map((p) => ({
+      day: p.timeslot?.dayOfWeek,
+      start: p.timeslot ? parseTimeToMinutes(p.timeslot.startTime) : null,
+      end: p.timeslot ? parseTimeToMinutes(p.timeslot.startTime) + 60 : null,
     }))
+    .filter((ts) => ts.start !== null)
     .sort((a, b) => a.start - b.start);
 
   // Create time columns for grid
   const timeColumns = [...new Set(allTimeslots.map((ts) => ts.start))].sort((a, b) => a - b);
 
-  // Group periods by day
+  // Group periods by day for filtered periods
   const groupedPeriods = daysOrder.reduce((acc, day) => {
-    acc[day] = timetableData.periods.filter(
+    acc[day] = filteredPeriods.filter(
       (p) => p.timeslot?.dayOfWeek === day && p.timeslot?.startTime
     );
     return acc;
@@ -75,11 +100,27 @@ const ViewTimetable = () => {
 
   return (
     <div className="p-4 overflow-x-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">
-          {timetableData?.periods[0]?.divisionName.department.acronym} -{' '}
-          {timetableData?.periods[0]?.divisionName.identity} Timetable
-        </h1>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">
+            {filteredPeriods[0]?.divisionName.department.acronym} -{' '}
+            {filteredPeriods[0]?.divisionName.identity} Timetable
+          </h1>
+          <div className="mt-2">
+            <label className="mr-2 font-medium">Select Division:</label>
+            <select
+              value={selectedDivision}
+              onChange={(e) => setSelectedDivision(e.target.value)}
+              className="border rounded px-2 py-1"
+            >
+              {divisions.map((div) => (
+                <option key={div.identity} value={div.identity}>
+                  {div.department} - {div.identity} (Sem {div.semester})
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
         <button
           onClick={() => router.push(`/report?jobId=${jobId}`)}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"

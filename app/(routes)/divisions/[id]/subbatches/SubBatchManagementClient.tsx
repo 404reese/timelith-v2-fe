@@ -53,6 +53,7 @@ export default function SubBatchManagementClient({
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoadingStudents, setIsLoadingStudents] = useState<boolean>(false);
   const [studentCounts, setStudentCounts] = useState<Record<number, number>>({});
+  const [courseCounts, setCourseCounts] = useState<Record<number, number>>({});
 
   // State for managing courses
   const [selectedSubBatchForCourses, setSelectedSubBatchForCourses] = useState<number | null>(null);
@@ -229,10 +230,26 @@ export default function SubBatchManagementClient({
     }
   };
 
+  const fetchCourseCount = async (subBatchId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/periods/subbatch/${subBatchId}/courses`
+      );
+      const courses = await response.json();
+      setCourseCounts(prev => ({
+        ...prev,
+        [subBatchId]: Array.isArray(courses) ? courses.length : 0
+      }));
+    } catch (error) {
+      console.error(`Error fetching course count for subbatch ${subBatchId}:`, error);
+    }
+  };
+
   useEffect(() => {
     subBatches.forEach(batch => {
       if (batch.id) {
         fetchStudentCount(batch.id);
+        fetchCourseCount(batch.id);
       }
     });
   }, [subBatches]);
@@ -311,20 +328,26 @@ export default function SubBatchManagementClient({
                   </Button>
                   <Button
                     variant="secondary"
-                    className="w-full border hover:text-green-600 hover:border-green-600"
+                    className="w-full border hover:text-blue-600 hover:border-blue-600"
                     onClick={() => setSelectedSubBatchForCourses(batch.id!)}
                   >
                     <BookOpen className="h-4 w-4 mr-2" />
                     Assign Courses
-                    {/* Add course count badge here if available */}
+                    <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
+                      (courseCounts[batch.id!] ?? 0) === 0
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-blue-100 text-blue-600'
+                    }`}>
+                      {courseCounts[batch.id!] ?? 0}
+                    </span>
                   </Button>
                   <Button
                     variant="secondary"
-                    className="w-full border hover:text-purple-600 hover:border-purple-600"
+                    className="w-full border hover:text-blue-600 hover:border-blue-600"
                     onClick={() => router.push(`/divisions/${division.id}/subbatches/${batch.id}/periods`)}
                   >
                     <Eye className="h-4 w-4 mr-2" />
-                    View Schedule
+                    Detailed Period View
                   </Button>
                 </div>
               </div>

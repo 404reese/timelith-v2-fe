@@ -15,8 +15,9 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
-  SquareMenu,
-  UserRoundPen
+  UserRoundPen,
+  Eye,
+  Presentation
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -46,7 +47,7 @@ const routes = [
   },
   {
     label: "Period Types",
-    icon: SquareMenu,
+    icon: Presentation,
     href: "/periodtypes",
   },
   {
@@ -83,6 +84,11 @@ const routes = [
     label: "Generate",
     icon: Calendar,
     href: "/generate",
+  },
+  {
+    label: "View Timetables",
+    icon: Eye,
+    href: "/all-timetables",
   },
 ];
 

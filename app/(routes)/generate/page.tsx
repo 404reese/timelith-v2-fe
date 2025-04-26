@@ -59,14 +59,22 @@ const Generate = () => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data), // Use data from 8080
+            body: JSON.stringify(data),
           });
-          const secondData = await secondRes.json();
-          setSecondResponse(JSON.stringify(secondData, null, 2)); // Pretty print JSON
+          const rawResponse = await secondRes.text();
+          let secondData;
+          try {
+            secondData = JSON.parse(rawResponse);
+          } catch {
+            secondData = rawResponse; // Use plain text if not JSON
+          }
+          setSecondResponse(JSON.stringify(secondData, null, 2));
           
-          // Extract jobId from response (assume { jobId: "..." })
-          const jobId = secondData.jobId || secondData[0];
-          setJobId(jobId || ''); // Save jobId to state
+          // Handle both object and string responses
+          const jobId = typeof secondData === 'string' 
+            ? secondData 
+            : secondData?.jobId || secondData?.[0];
+          setJobId(jobId || '');
           if (!jobId) {
             setStatus('No jobId returned from backend');
             return;

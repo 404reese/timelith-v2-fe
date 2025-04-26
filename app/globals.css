@@ -98,3 +98,72 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Add this to your global CSS file or within <style jsx global> */
+@media print {
+  body * {
+    visibility: hidden; /* Hide everything by default */
+    -webkit-print-color-adjust: exact !important; /* Ensure colors are printed */
+    color-adjust: exact !important;
+  }
+
+  #printable-timetable, #printable-timetable * {
+    visibility: visible; /* Make the timetable and its children visible */
+  }
+
+  #printable-timetable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    overflow: visible; /* Ensure full grid prints */
+    max-height: none; /* Remove max-height for printing */
+    background-color: white !important; /* Ensure background is white for print */
+  }
+
+  .timetable-grid-container {
+     overflow: visible !important; /* Override inline overflow styles */
+     max-height: none !important; /* Override inline max-height */
+  }
+
+  /* Target specific elements for color printing if the body * rule is too broad or causes issues */
+  #printable-timetable .bg-green-50,
+  #printable-timetable .bg-blue-50,
+  #printable-timetable .bg-pink-100 {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    background-color: inherit !important; /* Use the color defined by the class */
+    border-color: inherit !important; /* Ensure borders also print color */
+  }
+
+  /* Ensure text within colored cards is visible */
+  #printable-timetable .text-gray-600,
+  #printable-timetable .text-gray-500,
+  #printable-timetable .text-red-600,
+  #printable-timetable .font-semibold {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    color: inherit !important; /* Use the color defined by the class */
+  }
+
+
+  /* Optional: Hide buttons and other non-grid elements explicitly if needed */
+  button, .flex.justify-between, .mt-2 {
+    display: none !important;
+  }
+
+  /* Ensure sticky headers don't interfere in print */
+  .sticky {
+    position: static !important;
+  }
+
+  /* Ensure grid lines are visible */
+  #printable-timetable .border,
+  #printable-timetable .border-r,
+  #printable-timetable .border-b {
+     border-color: #e5e7eb !important; /* Use a light gray for borders */
+     -webkit-print-color-adjust: exact !important;
+     color-adjust: exact !important;
+  }
+}

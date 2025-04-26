@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import {Printer, ScrollText} from 'lucide-react';
 
 const parseTimeToMinutes = (timeStr) => {
   const [hours, minutes] = timeStr.split(':').map(Number);
@@ -75,7 +76,7 @@ const ViewTimetable = () => {
   );
 
   // Process timeslots for filtered periods only
-  const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+  const daysOrder = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
 
   // Get all unique timeslots across days for filtered periods
   const allTimeslots = filteredPeriods
@@ -86,6 +87,17 @@ const ViewTimetable = () => {
     }))
     .filter((ts) => ts.start !== null)
     .sort((a, b) => a.start - b.start);
+
+  // Add recess timeslots to ensure they appear in the grid
+  if (timetableData.recesses && timetableData.recesses.length > 0) {
+    timetableData.recesses.forEach(recess => {
+      allTimeslots.push({
+        day: recess.dayOfWeek,
+        start: parseTimeToMinutes(recess.startTime),
+        end: parseTimeToMinutes(recess.endTime)
+      });
+    });
+  }
 
   // Create time columns for grid
   const timeColumns = [...new Set(allTimeslots.map((ts) => ts.start))].sort((a, b) => a - b);
@@ -99,7 +111,7 @@ const ViewTimetable = () => {
   }, {});
 
   return (
-    <div className="p-4 overflow-x-auto">
+    <div className="p-4">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
         <div>
           <h1 className="text-2xl font-bold">
@@ -121,87 +133,153 @@ const ViewTimetable = () => {
             </select>
           </div>
         </div>
-        <button
-          onClick={() => router.push(`/report?jobId=${jobId}`)}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-        >
-          View Report
-        </button>
+        <div className="flex gap-2"> {/* Container for buttons */}
+          <button
+            onClick={() => router.push(`/report?jobId=${jobId}`)}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2"
+          >
+            <ScrollText />
+            <span>View Report</span>
+          </button>
+          <button
+            onClick={() => window.print()} // Add print handler
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2"
+          >
+            <Printer />
+            <span>Print Timetable</span>
+          </button>
+        </div>
       </div>
 
-      {/* Timetable Grid */}
-      <div
-        className="grid gap-[1px] bg-gray-200"
-        style={{
-          gridTemplateColumns: `120px repeat(${timeColumns.length}, minmax(150px, 1fr))`,
-        }}
-      >
-        {/* Header Row */}
-        <div className="bg-white sticky left-0 z-20 h-16"></div>
-        {timeColumns.map((time, idx) => (
+      {/* Add a wrapper div with an ID for printing */}
+      <div id="printable-timetable">
+        {/* Timetable Grid - scrollable container */}
+        <div
+          style={{
+            maxHeight: '70vh',
+            overflow: 'auto',
+            overflowX: 'auto'
+          }}
+          className="w-full timetable-grid-container" // Added a class for print styles
+        >
           <div
-            key={`time-${idx}`}
-            className="bg-white p-2 text-center sticky top-0 z-10 border-b h-16"
+            className="grid gap-[1px] bg-white"
+            style={{
+              gridTemplateColumns: `120px repeat(${timeColumns.length}, minmax(200px, 1fr))`,
+            }}
           >
-            {formatMinutesToTime(time)}
-          </div>
-        ))}
+            {/* Header Row */}
+            <div className="bg-white sticky left-0 z-20 h-16"></div> {/* Day column header cell */}
+            {timeColumns.map((time, idx) => (
+              <div
+                key={`time-${idx}`}
+                className="bg-white p-2 text-center sticky top-0 z-20 border-b h-16" // Increased z-index here
+              >
+                {formatMinutesToTime(time)}
+              </div>
+            ))}
 
-        {/* Day Rows */}
-        {daysOrder.map((day) => (
-          <React.Fragment key={day}>
-            <div className="bg-white p-2 font-medium sticky left-0 z-20 border-r h-20">
-              {day}
-            </div>
+            {/* Day Rows */}
+            {daysOrder.map((day) => (
+              <React.Fragment key={day}>
+                <div className="bg-white p-2 font-medium sticky left-0 z-20 border-r h-20"> {/* Day name cell */}
+                  {day}
+                </div>
 
-            {timeColumns.map((colTime, colIdx) => {
-              // Find all periods that overlap with this cell's time slot
-              const periodsAtCell = groupedPeriods[day].filter((p) => {
-                const start = parseTimeToMinutes(p.timeslot.startTime);
-                const durationInMinutes =
-                  p.subject.type === 'Practical' ? 120 : parseDuration(p.duration);
-                const end = start + durationInMinutes;
-                return start <= colTime && end > colTime;
-              });
+                {timeColumns.map((colTime, colIdx) => {
+                  // Check if this cell is a recess/break time
+                  const isBreakTime = timetableData.recesses?.some(r => 
+                    r.dayOfWeek === day &&
+                    parseTimeToMinutes(r.startTime) <= colTime &&
+                    parseTimeToMinutes(r.endTime) > colTime
+                  );
 
-              return (
-                <div
-                  key={`${day}-${colIdx}`}
-                  className="bg-white relative border-r border-b min-h-[80px]"
-                >
-                  {periodsAtCell.map((period, idx) => (
+                  // Find all periods that overlap with this cell's time slot
+                  const periodsAtCell = groupedPeriods[day].filter((p) => {
+                    const start = parseTimeToMinutes(p.timeslot.startTime);
+                    const durationInMinutes =
+                      p.subject.type === 'Practical' ? 120 : parseDuration(p.duration);
+                    const end = start + durationInMinutes;
+                    return start <= colTime && end > colTime;
+                  });
+
+                  // Calculate dynamic height based on number of cards
+                  const cellHeight = periodsAtCell.length > 0 
+                    ? Math.max(80, periodsAtCell.length * 85) 
+                    : 120; // Minimum 80px height
+
+                  return (
                     <div
-                      key={period.id || idx}
-                      className={`absolute inset-1 p-2 rounded border ${
-                        period.subject.type === 'Practical'
-                          ? 'bg-green-50 border-green-200'
-                          : 'bg-blue-50 border-blue-200'
-                      }`}
-                      style={{
-                        gridColumn: `${colIdx + 2} / span ${
-                          period.subject.type === 'Practical'
-                            ? 2
-                            : Math.ceil(parseDuration(period.duration) / 60)
-                        }`,
-                        position: "relative",
+                      key={`${day}-${colIdx}`}
+                      className={`relative border-r border-b ${isBreakTime ? '' : 'bg-white'}`}
+                      style={{ 
+                        minHeight: `${cellHeight}px`,
+                        height: `${cellHeight}px`
                       }}
                     >
-                      <div className="text-sm font-semibold break-words">
-                        {period.subject.courseCode} - {period.subject.courseName}
-                      </div>
-                      <div className="text-xs text-gray-600 truncate">
-                        {period.instructor?.initials || 'Staff'} | {period.batch}
-                      </div>
-                      <div className="text-xs text-gray-500 truncate">
-                        {period.resourceRoom?.roomName || 'Room'} | {period.subject.type}
-                      </div>
+                      {/* Display break label if this is a break time */}
+                      {isBreakTime && (
+                        <div
+                        style={{
+                          height: `${cellHeight * 0.7}px`
+                        }}
+                        className="bg-pink-100 absolute inset-0 flex items-center justify-center text-red-600 font-medium z-10 border border-pink-300 rounded-md m-1">
+                          Break
+                        </div>
+                      )}
+                      
+                      {/* Display periods */}
+                      {!isBreakTime && periodsAtCell.map((period, idx) => {
+                        const startTime = parseTimeToMinutes(period.timeslot.startTime);
+                        const durationInMinutes = period.subject.type === 'Practical' ? 120 : parseDuration(period.duration);
+                        const spanCols = Math.max(1, Math.ceil(durationInMinutes / 60));
+                        
+                        // Only render the card at its starting position
+                        if (startTime === colTime) {
+                          // Calculate offsetTop based on card index
+                          const cardHeight = 75; // Height of each card
+                          const cardMargin = 5; // Margin between cards
+                          const offsetTop = idx * (cardHeight + cardMargin);
+                          
+                          return (
+                            <div
+                              key={period.id || idx}
+                              className={`absolute p-2 rounded border ${
+                                period.subject.type === 'Practical'
+                                  ? 'bg-green-50 border-green-200'
+                                  : 'bg-blue-50 border-blue-200'
+                              }`}
+                              style={{
+                                width: `calc(${spanCols * 100}% + ${(spanCols - 1) * 1}px)`,
+                                top: `${offsetTop}px`,
+                                left: '4px',
+                                right: '4px',
+                                minHeight: '75px',
+                                height: 'auto',
+                                zIndex: 5,
+                              }}
+                            >
+                              <div className="text-sm font-semibold break-words">
+                                {period.subject.courseCode} - {period.subject.courseName}
+                              </div>
+                              <div className="text-xs text-gray-600 truncate">
+                                {period.instructor?.initials || 'Staff'} | {period.batch}
+                              </div>
+                              <div className="text-xs text-gray-500 truncate">
+                                {period.resourceRoom?.roomName || 'Room'} | {period.subject.type}
+                              </div>
+                            </div>
+                          );
+                        }
+                        return null;
+                      })}
                     </div>
-                  ))}
-                </div>
-              );
-            })}
-          </React.Fragment>
-        ))}
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
